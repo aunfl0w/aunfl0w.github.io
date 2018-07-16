@@ -1,0 +1,44 @@
+---
+layout: post
+title:  "Don't xor"
+date:   2018-07-15 18:00:00 -0400
+categories: security xor
+---
+
+# We used xor to keep your secrets safe
+If you experience this situation it is time to look closer.  While XOR will make a string that is eyeball safe it isn't going to provide protection from even the casually interested.  Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn't an option for security.  Let's look at some example of why this is such a bad idea.
+
+## example of making an xor encoded string for later retrieval
+{% highlight bash linenos %}	
+./xorenc.py 99 "This is the secret password"
+encoding to base64 encoded with 99 string This is the secret password
+xored hex string b'370b0a10430a1043170b06431006001106174313021010140c1107'
+
+{% endhighlight %}
+[xorenc.py](https://github.com/aunfl0w/experiments/blob/master/python/xorenc.py)
+
+How easy is it to get back by guessing?
+{% highlight bash linenos %}	
+./xordec.py 370b0a10430a1043170b06431006001106174313021010140c1107
+guess decoded string of hex encoded string 370b0a10430a1043170b06431006001106174313021010140c1107
+try key96
+Wkjp#jp#wkf#pf`qfw#sbpptlqg
+try key97
+Vjkq"kq"vjg"qgapgv"rcqqumpf
+try key98
+Uihr!hr!uid!rdbsdu!q`rrvnse
+try key99
+This is the secret password
+try key100
+Sont'nt'sob'tbdubs'wfttphuc
+try key101
+Rnou&ou&rnc&ucetcr&vguuqitb
+
+{% endhighlight %}
+[xordec.py](https://github.com/aunfl0w/experiments/blob/master/python/xordec.py)
+
+very easy.
+
+
+
+Most of the ideas for these examples are from the challenge questions at [cryptopals website](http://cryptopals.com/)
