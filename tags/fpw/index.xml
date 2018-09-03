@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fpw on Aun&#39;s Blog</title>
+    <link>https://aunfl0w.github.io/tags/fpw/</link>
+    <description>Recent content in Fpw on Aun&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Sep 2018 20:13:54 -0400</lastBuildDate>
+    
+	<atom:link href="https://aunfl0w.github.io/tags/fpw/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducing Frozen Particle Waves</title>
+      <link>https://aunfl0w.github.io/2018/start/</link>
+      <pubDate>Sat, 01 Sep 2018 20:13:54 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2018/start/</guid>
+      <description>Frozen Particle Waves Frozen Particle Waves is a project I started to learn and demonstrate the use of a Spring Boot server app with an Angular client side UI. Currently it can be used to aggregate images from webcams that expose images through http endpoints and also supports basic auth. It uses Spring Boot as the application server to provide REST endpoints to the client side Angular UI. Spring security is used to secure the endpoints and handle user authn/authz.</description>
+    </item>
+    
+  </channel>
+</rss>
