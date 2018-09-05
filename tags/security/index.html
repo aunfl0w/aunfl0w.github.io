@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aun&#39;s Blog  | Arbitrary Scaling X</title>
+    <title>Aun&#39;s Blog  | Security</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -42,7 +42,7 @@ if (!doNotTrack) {
                 <br>
                 <h1 class="title is-size-1">
                     
-                        Arbitrary Scaling X
+                        #Security
                     
                 </h1>
                 
@@ -55,45 +55,26 @@ if (!doNotTrack) {
     <div class="section">
     
 
+
+
 <div class="columns">
     <div class="column is-9">
         <div class="tile is-child box">
             <div class="content">
-                <p>I&rsquo;m a bargain hunter.  Lately I have been playing with some low powered <a href="https://www.acer.com/ac/en/US/content/model/NX.SHXAA.006">windows cloudbooks</a>.  I picked it up &ldquo;refurbished&rdquo;, the box and packaging looked new, for less than $200.  It has a full HD 14&rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text.  Also, it was repurposed as a computer for a student.  As usual I made a backup image of the internal storage for when it gets passed on to the next person that wants windows.  Then I installed Linux.  Now I have a cheap remote terminal with great battery life, a decent keyboard, enough RAM to run a few things and if I loose or break it no big deal.</p>
 
-<p>However, now I find I have the opposite problem with the pixel density.  Instead of too big it&rsquo;s too small.  This system doesn&rsquo;t have the power to run Wayland, and I don&rsquo;t have the patience to deal with the application compatibility issues anyway, so that was not an option.  Gnome has a Hi-dpi scaling option that works with X but only supports <a href="https://wiki.gnome.org/HowDoI/HiDpi">2X scale</a>.  That put it right back to 720p sizes, albiet without the pixelations.  Another solution was needed.</p>
-
-
-<figure>
-    
-        <img src="/img/gnome-settings-scale.png" />
-    
-    
-    <figcaption>
-        <h4>GNOME Hi-dpi scale options</h4>
-        
-    </figcaption>
-    
-</figure>
-
-
-<p>I want to have arbitrary scaling.  After a lot of research (googling) I found a that xrandr could change the scaling factor in X.  It doesn&rsquo;t have the built in gui integration with gnome or remember the setting but hey this is linux and I can easily change it back and forth with one command.  The bash script below has the name of the display which you can get by running xrandr without options and some other resolution options specific to this device.  Add in  a little simple shell maths and I now have arbitrary scaling in X.  I find that 75% is quite pleasing so that is the default if no option is passed.</p>
-
-<p>Here is the script I used to make setting the scaling easy.</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash 
-</span><span style="color:#75715e"></span>display<span style="color:#f92672">=</span>eDP-1
-xsize<span style="color:#f92672">=</span><span style="color:#ae81ff">1920</span>
-ysize<span style="color:#f92672">=</span><span style="color:#ae81ff">1080</span>
-scale<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.75
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $1 !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
-scale<span style="color:#f92672">=</span>$1
-<span style="color:#66d9ef">fi</span>
-
-xrandr --output $display --scale <span style="color:#e6db74">${</span>scale<span style="color:#e6db74">}</span>x<span style="color:#e6db74">${</span>scale<span style="color:#e6db74">}</span></code></pre></div>
-
-<p>Using the script to set the scale to 70%
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">aun@one:~/bin$ scale .7</code></pre></div></p>
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2018/not-security/">XOR NOT Security</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at July 21, 2018 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>We used xor to keep your secrets safe If you experience this situation it is time to look closer. While XOR will make a string that is eyeball safe it isn&rsquo;t going to provide protection from even the casually interested. Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn&rsquo;t an option for security....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
 
             </div>
         </div>

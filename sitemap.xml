@@ -13,6 +13,11 @@
   </url>
   
   <url>
+    <loc>https://aunfl0w.github.io/2018/not-security/</loc>
+    <lastmod>2018-07-21T20:13:49-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://aunfl0w.github.io/archives/2018/</loc>
     <lastmod>2018-09-01T20:13:54-04:00</lastmod>
     <priority>0</priority>
@@ -45,6 +50,12 @@
   <url>
     <loc>https://aunfl0w.github.io/post/</loc>
     <lastmod>2018-09-01T20:13:54-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://aunfl0w.github.io/tags/security/</loc>
+    <lastmod>2018-07-21T20:13:49-04:00</lastmod>
     <priority>0</priority>
   </url>
   

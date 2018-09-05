@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Security on Aun&#39;s Blog</title>
+    <link>https://aunfl0w.github.io/tags/security/</link>
+    <description>Recent content in Security on Aun&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Jul 2018 20:13:49 -0400</lastBuildDate>
+    
+	<atom:link href="https://aunfl0w.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>XOR NOT Security</title>
+      <link>https://aunfl0w.github.io/2018/not-security/</link>
+      <pubDate>Sat, 21 Jul 2018 20:13:49 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2018/not-security/</guid>
+      <description>We used xor to keep your secrets safe If you experience this situation it is time to look closer. While XOR will make a string that is eyeball safe it isn&amp;rsquo;t going to provide protection from even the casually interested. Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn&amp;rsquo;t an option for security.</description>
+    </item>
+    
+  </channel>
+</rss>
