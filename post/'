@@ -1,0 +1,240 @@
+---
+title: "Functional Thinking"
+date: 2018-11-16T17:58:02-05:00
+archives: "2018"
+tags: 
+ - programming
+ - functional
+---
+
+# Functional Thinking
+For functional programming.
+
+## A Non Functional Aproach
+This is a sample program that processes a generated sample list of data.  With the list of data it performs common operations such as find items, count types, sum things up etc.  Do you see the duplicate code that is copy pasted with small changes? Can you tell what each loop is doing without thinking about what is going on in the loop or using the comments?
+
+{{< highlight java >}}
+	public static void main(String[] args) {
+
+		List<Item> listOfItems = DataGenerator.makeDataList((int) (Math.random() * 10000.0));
+
+		// total count
+		System.out.println("Total number of items is: " + listOfItems.size());
+			
+		// find how many are "cookies"
+		int cookiesCount = 0;
+		for (Item i : listOfItems) {
+			if (i != null) {
+				if (i.type != null) {
+					if (i.type.equals("cookie")) {
+						cookiesCount++;
+					}
+				}
+			}
+		}
+		System.out.println("Cookies Count is: " + cookiesCount);
+
+
+		// sum up the cost
+		double totalCost = 0.0;
+		for (Item i : listOfItems) {
+			if (i != null) {
+				totalCost += i.cost;
+			}
+		}
+		System.out.println("Total Cost: " + totalCost);
+
+		// how many are YELLOW
+		int yellowCount = 0;
+		for (Item i : listOfItems) {
+			if (i != null) {
+				if (i.color == Item.Color.YELLOW) {
+					yellowCount++;
+				}
+			}
+		}
+		System.out.println("Total Yellow count: " + totalCost);
+
+	}
+{{< /highlight >}}
+
+Did you spot the not so obvious error that the compiler can't warn you about using this pattern?  I'll give you a hint, the Total Yellow count is not the cost.  
+
+{{< highlight plaintext >}}
+Total number of items is: 4739
+Cookies Count is: 41
+Total Cost: 120428.0834048946
+Total Yellow count: 120428.0834048946
+{{< /highlight >}}
+
+This strategy can work, assuming you avoid the copy paste rename error in the example, but several things can be improved.  Look at all that duplicated code.  We make use of the java for each loop syntax to reduce the code, but this is realy syntactic sugar for iterators.  Look at how much repeated code you have to read through to see what is going on.  Really all the code wants to ask is type cookie, type has space, count how many are yellow.  Why do we need all the counters and loops? We don't.
+
+Let's try some functional programming.
+
+## A little functional
+
+In OO the discussions talk a lot about Is-A relationships and composition we change to a users of function relationship.  This provides a more felixble way to use and compose solutions.  Why do we say function instead of method?  methods is used to imply that an ssociated with an object that has state and that the state of the object or system will be altered by calling the method.  Functional programmers mean specifically that a function takes input and works on it to process it's output and make no other changes in the state of the world.  OO is about encapsulation, functional is about isolation.  There is no restriction in java that lambda functions don't change the state of the world, it is an expectation that you need to adhear to so you avoid surprising (and breaking code) of consumers.
+
+Here is an example useing List streams.
+{{< highlight java >}}
+	public static void main(String[] args) {
+		List<Item> listOfItems = DataGenerator.makeDataList((int) (Math.random() * 10000.0));
+
+		// total count
+		System.out.println("Total number of items is: " + listOfItems.size());
+			
+		// find how many are "cookies"
+		long cookiesCount = listOfItems.
+			stream()
+			.filter((x) -> x != null && x.type != null)
+			.filter((x) -> x.type.equals("cookie"))
+			.count();
+		System.out.println("Cookies Count is: " + cookiesCount);
+
+
+		// sum up the cost
+			double totalCost = listOfItems.
+				stream()
+				.filter((x) -> x != null)
+				.map(x -> x.cost )
+				.reduce((total, next)-> total + next)
+				.orElse(0.0);
+			
+		System.out.println("Total Cost: " + totalCost);
+
+		long yellowCount = listOfItems.
+				stream().filter((x) -> x != null)
+				.filter((x) -> x.color == Color.YELLOW)
+				.count();
+		System.out.println("Total Yellow count: " + yellowCount);
+	}
+
+{{</ highlight >}}
+
+
+That's better.  We still have some repeated code and hard to read anonymous lambdas.  Let's pull those out and give them names.
+
+{{< highlight java >}}
+	private static final Predicate<? super Item> NOT_NULL_TYPE = (x) -> x != null && x.type != null;
+	private static final Predicate<? super Item> NOT_NULL = (x) -> x != null;
+	private static final Predicate<? super Item> COOKIES = (x) -> x.type.equals("cookie");
+	private static final Function<Item, Double> GET_COST = x -> x.cost;
+	private static final BinaryOperator<Double> SUM_COST = (total, next) -> total + next;
+	private static final Predicate<? super Item> COLOR_YELLOW = (x) -> x.color == Color.YELLOW;
+
+	public static void main(String[] args) {
+		List<Item> listOfItems = DataGenerator.makeDataList((int) (Math.random() * 10000.0));
+
+		System.out.println("Total number of items is: " + listOfItems.size());
+
+		long cookiesCount = listOfItems
+				.stream()
+				.filter(NOT_NULL_TYPE)
+				.filter(COOKIES)
+				.count();
+		System.out.println("Cookies Count is: " + cookiesCount);
+
+		double totalCost = listOfItems
+				.stream()
+				.filter(NOT_NULL)
+				.map(GET_COST)
+				.reduce(SUM_COST)
+				.orElse(0.0);
+		System.out.println("Total Cost: " + totalCost);
+
+		long yellowCount = listOfItems
+				.stream()
+				.filter(NOT_NULL)
+				.filter(COLOR_YELLOW)
+				.count();
+		System.out.println("Total Yellow count: " + yellowCount);
+	}
+
+{{</ highlight  >}}
+
+Now I can clearly ready what is going on.  No looping code and filtering.  No state counters.  And if the lists are large we can easily use parallel streams to use all the cores available without any overhead of managing parllel processing.
+
+Let's add some timing and try parallel.  Adding some more modularization that will ease testing and also allow for addding timing.  The timing messages can also be tested too, however the time take to run cannot be konwn.
+
+{{< highlight java >}}
+	private static final Predicate<? super Item> NOT_NULL_TYPE = (x) -> x != null && x.type != null;
+	private static final Predicate<? super Item> NOT_NULL = (x) -> x != null;
+	private static final Predicate<? super Item> COOKIES = (x) -> x.type.equals("cookie");
+	private static final Function<Item, Double> GET_COST = x -> x.cost;
+	private static final BinaryOperator<Double> SUM_COST = (total, next) -> total + next;
+	private static final Predicate<? super Item> COLOR_YELLOW = (x) -> x.color == Color.YELLOW;
+
+	public static void main(String[] args) {
+		List<Item> listOfItems = DataGenerator.makeDataList((int) (Math.random() * 50_000_000.0));
+
+		System.out.println("Total number of items is: " + listOfItems.size());
+
+		long cookiesCount = timed(() -> countCookies(listOfItems),"cookie time ", System.out::println); 
+		System.out.println("Cookies Count is: " + cookiesCount);
+
+		double totalCost = timed(() -> sumCost(listOfItems), "cost time ", System.out::println);
+		System.out.println("Total Cost: " + totalCost);
+
+		long yellowCount = timed(() -> countYellow(listOfItems), "yellow time ", System.out::println);
+		System.out.println("Total Yellow count: " + yellowCount);
+	}
+	
+	public static <A> A timed(Supplier<A> code, String description, Consumer<String> output) {
+		final long start = new Date().getTime();
+		A result = code.get();
+		final long end = new Date().getTime();
+		output.accept(description + (end - start));
+		return result;
+	}
+	
+	static long countYellow(List<Item> listOfItems) {
+		long yellowCount = listOfItems
+				.stream()
+				.filter(NOT_NULL)
+				.filter(COLOR_YELLOW)
+				.count();
+		return yellowCount;
+	}
+
+	static double sumCost(List<Item> listOfItems) {
+		double totalCost = listOfItems
+				.stream()
+				.filter(NOT_NULL)
+				.map(GET_COST)
+				.reduce(SUM_COST)
+				.orElse(0.0);
+		return totalCost;
+	}
+
+	static long countCookies(List<Item> listOfItems) {
+		long cookiesCount = listOfItems
+				.stream()
+				.filter(NOT_NULL_TYPE)
+				.filter(COOKIES)
+				.count();
+		return cookiesCount;
+	}
+{{</ highlight >}}
+
+Time single threaded:
+{{< highlight plaintext >}}
+Total number of items is: 49829173
+cookie time 195
+Cookies Count is: 424299
+cost time 428
+Total Cost: 1.2467238787011356E9
+yellow time 402
+Total Yellow count: 623121
+{{</ highlight >}}
+
+Time multithreaded just by chaning .stream() to .parallelStream() on my 8 core computer we see a substantial speedup.
+{{< highlight plaintext >}}
+Total number of items is: 29870890
+cookie time 145
+Cookies Count is: 254596
+cost time 95
+Total Cost: 7.471945593804344E8
+yellow time 57
+Total Yellow count: 372934
+{{</ highlight >}}
+

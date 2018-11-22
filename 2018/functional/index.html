@@ -277,6 +277,67 @@ Total Cost: 7.471945593804344E8
 yellow time 57
 Total Yellow count: 372934</code></pre></div></p>
 
+<h2 id="functional-testing">Functional Testing</h2>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> functional<span style="color:#f92672">;</span>
+
+<span style="color:#f92672">import static</span> org.junit.jupiter.api.Assertions.assertEquals<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeFunctionalTest</span> <span style="color:#f92672">{</span>
+
+	<span style="color:#66d9ef">static</span> ArrayList<span style="color:#f92672">&lt;</span>Item<span style="color:#f92672">&gt;</span> testData <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+	<span style="color:#66d9ef">static</span> <span style="color:#f92672">{</span>
+		testData<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Item<span style="color:#f92672">(</span>
+				<span style="color:#e6db74">&#34;cookie&#34;</span><span style="color:#f92672">,</span>
+				Color<span style="color:#f92672">.</span><span style="color:#a6e22e">BLUE</span><span style="color:#f92672">,</span>
+				1<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span>
+				<span style="color:#f92672">));</span>
+		testData<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Item<span style="color:#f92672">(</span>
+				<span style="color:#e6db74">&#34;toaster&#34;</span><span style="color:#f92672">,</span>
+				Color<span style="color:#f92672">.</span><span style="color:#a6e22e">YELLOW</span><span style="color:#f92672">,</span>
+				20<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span>
+				<span style="color:#f92672">));</span>
+		testData<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> Item<span style="color:#f92672">(</span>
+				<span style="color:#e6db74">&#34;electric eel&#34;</span><span style="color:#f92672">,</span>
+				Color<span style="color:#f92672">.</span><span style="color:#a6e22e">YELLOW</span><span style="color:#f92672">,</span>
+				Math<span style="color:#f92672">.</span><span style="color:#a6e22e">PI</span> <span style="color:#f92672">*</span> 100<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span>
+				<span style="color:#f92672">));</span>
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#a6e22e">@Test</span>
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testTimed</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		AtomicReference<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> output <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AtomicReference<span style="color:#f92672">&lt;&gt;();</span>
+		<span style="color:#66d9ef">final</span> String logMessage <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;make a bunny &#34;</span><span style="color:#f92672">;</span>
+		SomeFunctional<span style="color:#f92672">.</span><span style="color:#a6e22e">timed</span><span style="color:#f92672">(()-&gt;</span> logMessage<span style="color:#f92672">,</span> logMessage<span style="color:#f92672">,</span> output:<span style="color:#f92672">:</span>set<span style="color:#f92672">);</span>
+		String timeoutput <span style="color:#f92672">=</span> output<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">();</span>
+		assertTrue<span style="color:#f92672">(</span>timeoutput<span style="color:#f92672">.</span><span style="color:#a6e22e">contains</span><span style="color:#f92672">(</span>logMessage<span style="color:#f92672">));</span>
+		
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#a6e22e">@Test</span>
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testCountYellow</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		assertEquals<span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> 
+				SomeFunctional<span style="color:#f92672">.</span><span style="color:#a6e22e">countYellow</span><span style="color:#f92672">(</span>testData<span style="color:#f92672">));</span>
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#a6e22e">@Test</span>
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testSumCost</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		<span style="color:#66d9ef">double</span> expectedTotal <span style="color:#f92672">=</span> 
+				Math<span style="color:#f92672">.</span><span style="color:#a6e22e">PI</span> <span style="color:#f92672">*</span> 100<span style="color:#f92672">.</span><span style="color:#a6e22e">0</span> <span style="color:#f92672">+</span> 20<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span> <span style="color:#f92672">+</span> 1<span style="color:#f92672">.</span><span style="color:#a6e22e">00</span><span style="color:#f92672">;</span>
+		assertEquals<span style="color:#f92672">(</span>expectedTotal<span style="color:#f92672">,</span>
+				SomeFunctional<span style="color:#f92672">.</span><span style="color:#a6e22e">sumCost</span><span style="color:#f92672">(</span>testData<span style="color:#f92672">));</span>
+	<span style="color:#f92672">}</span>
+
+	<span style="color:#a6e22e">@Test</span>
+	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testCountCookies</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+		assertEquals<span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> 
+				SomeFunctional<span style="color:#f92672">.</span><span style="color:#a6e22e">countCookies</span><span style="color:#f92672">(</span>testData<span style="color:#f92672">));</span>
+	<span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span></code></pre></div>
+
+<p>source <a href="https://github.com/aunfl0w/experiments/tree/master/src/main/java/functional">available here</a></p>
+
             </div>
         </div>
     </div>
