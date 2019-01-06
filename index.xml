@@ -6,10 +6,19 @@
     <description>Recent content on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Nov 2018 17:58:02 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 05 Jan 2019 21:52:38 -0500</lastBuildDate>
     
 	<atom:link href="https://aunfl0w.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Networking Observability</title>
+      <link>https://aunfl0w.github.io/2019/netcommands/</link>
+      <pubDate>Sat, 05 Jan 2019 21:52:38 -0500</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2019/netcommands/</guid>
+      <description>Notes on networking observability commnads For many years and many UNIXen the netstat command has been the way to get information on the current state of TCP/IP and UNIX sockets. The recent man pages for netstat on linux state that netstat is &amp;ldquo;mostly obsolete&amp;rdquo; and use ss instead. The man page for ss, &amp;ldquo;another utility to investigate sockets&amp;rdquo;, says that is allows showing information similar to netstat. Some notes on using ss.</description>
+    </item>
     
     <item>
       <title>Functional Thinking</title>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://aunfl0w.github.io/2019/netcommands/</loc>
+    <lastmod>2019-01-05T21:52:38-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://aunfl0w.github.io/2018/functional/</loc>
     <lastmod>2018-11-16T17:58:02-05:00</lastmod>
   </url>
@@ -44,6 +49,12 @@
   </url>
   
   <url>
+    <loc>https://aunfl0w.github.io/archives/2019/</loc>
+    <lastmod>2019-01-05T21:52:38-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://aunfl0w.github.io/archives/</loc>
     <lastmod>2018-11-16T17:58:02-05:00</lastmod>
     <priority>0</priority>
@@ -51,7 +62,7 @@
   
   <url>
     <loc>https://aunfl0w.github.io/</loc>
-    <lastmod>2018-11-16T17:58:02-05:00</lastmod>
+    <lastmod>2019-01-05T21:52:38-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -87,7 +98,7 @@
   
   <url>
     <loc>https://aunfl0w.github.io/post/</loc>
-    <lastmod>2018-11-16T17:58:02-05:00</lastmod>
+    <lastmod>2019-01-05T21:52:38-05:00</lastmod>
     <priority>0</priority>
   </url>
   
