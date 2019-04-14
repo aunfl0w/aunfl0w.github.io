@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Aun&#39;s Blog  | HTML 5 routes &amp; deep links with apache</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://aunfl0w.github.io/css/blog.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-125094479-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://aunfl0w.github.io">Home</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://aunfl0w.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        HTML 5 routes &amp; deep links with apache
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                
+
+<h1 id="html5-client-routing">HTML5 client routing</h1>
+
+<p>Deep links to client side applications using frameworks that make use of HTML5 routing, such as Angular, can be problematic.  The web browser client side application utilizes regular URL paths for client side application navigation that appear in the browser address to be locations of actual resources.  This however is not the case, the running application in the browser makes use of <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API#Example_of_pushState()_method">javascript pushstate</a> to navigate to states within the client side application and does not request the resource in the browser address bar when running.  All of this causes not issue unless the user takes an action that causes the browser to intiate a request to the nonexisting resource in the address bar.  For example, the user may bookmark a deep link into the application or press the reload button if the application is performing slowly.</p>
+
+<p>To accomodate this you need a web server that has some understanding of the state routing used in the browser address bar by the application.  In the progress of porting Frozen Particle Waves this issue was noticed in a few scnearios.  The Angular web application is packaged into a single Spring Boot jar and is usually fronted by Apache.  I will demonstrate how to configre rewrite rules in apache2 that can accomodate requests for resources that represent the client side application state.</p>
+
+<h1 id="an-example">An example</h1>
+
+<p>Frozen Particle Waves Angular version has a base path of /fpw2 and client side state routes of /fpw2/login and /fpw2/fpw-app/*.  Other paths within the application under /fpw2 are for resources, api calls and other artifacts such as javascript maps.  Initially without the change requests to /fpw2/ on the server would correctly bootstrap the client side application and send the unauthenticated user to /fpw2/login.  This works fine unless the user performs an action like describe above.  When one of those actions is performed the web browser requests a non existant resource and receives a 404 error page from the Spring Boot application.</p>
+
+<h1 id="apache-configuration-solution">Apache configuration solution</h1>
+
+<p>We need any request to the HTML5 added routes that is for client side state navigation to return the client side application without changing the URL so that the client side app will bootstrap and then see the navigation state in the URL.  This can be done with ReWrite rules in apache.</p>
+
+<p>This example makes use of the apache rewrite engine so make sure to enable the rewrite module and turn <code>RewriteEngine on</code> in the configuration file before using these apache2 configuration rules.  The configuration uses a Loction block.  Tha [apache2 configuration location block] allows us to define rules that match a location as represented in the URL.  These RewriteRules change the urls before they match the ProxyPass lines below.  The rules rewrite the login page to request the root unnamed file when /fpw2/login is requested.  Another rewrite rule is used to handle any requested resourcesfrom items under /fpw2/fpw-app.  The requests now modified as needed are sent to the ProxyPass directive to pass them to the application for processing.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apacheconf" data-lang="apacheconf"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apacheconf" data-lang="apacheconf">...
+        <span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">&#34;/fpw2&#34;</span><span style="color:#f92672">&gt;</span>
+                RewriteRule <span style="color:#e6db74">&#34;/fpw2/login&#34;</span> <span style="color:#e6db74">&#34;/fpw2/&#34;</span>
+                RewriteRule <span style="color:#e6db74">&#34;/fpw2/fpw-app/.*&#34;</span> <span style="color:#e6db74">&#34;/fpw2/&#34;</span>
+        <span style="color:#f92672">&lt;/Location&gt;</span>
+
+        ProxyPass <span style="color:#e6db74">/fpw2</span> http://192.168.1.238:8080/fpw2
+        ProxyPassReverse <span style="color:#e6db74">/fpw2</span> http://192.168.1.238:8080/fpw2
+...        </code></pre></td></tr></table>
+</div>
+</div>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>This solves the deep linking and bookmarking of HTML5 routes requested by the browser when using apache2.  It is important to also include an html <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base">base element</a> when using this approach to solve deep links to HTML5 routing locations so that the other resources of the page are rquested wih the correct relative location regardless of the browsers apparent location of the loaded index.html single page application.</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/family">family</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/fpw">fpw</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/functional">functional</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/linux">linux</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/observability">observability</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/programming">programming</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/security">security</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/x">x</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://aunfl0w.github.io/2019/html5routesapache/">HTML 5 routes &amp; deep links with apache</a></h1>
+            <time class="has-text-grey-light is-size-7">14 April 2019</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2019/netcommands/">Networking Observability</a></h1>
+            <time class="has-text-grey-light is-size-7">5 January 2019</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2018/functional/">Functional Thinking</a></h1>
+            <time class="has-text-grey-light is-size-7">16 November 2018</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2018/freedomtoadd/">Growing Frozen Particle Waves</a></h1>
+            <time class="has-text-grey-light is-size-7">11 November 2018</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2018/process-slaughterhouse/">Process Slaughterhouse</a></h1>
+            <time class="has-text-grey-light is-size-7">5 October 2018</time>
+        
+    </div>
+</div>
+    <br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
+        
+            <a href="https://aunfl0w.github.io/archives/2018">2018</a> (7)<br>
+        
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://twitter.com/aunwick" class="mysocial"><i class="fab fa-twitter fa-3x"></i></a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/aunfl0w" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; Aun&#39;s Blog 2019 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://aunfl0w.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

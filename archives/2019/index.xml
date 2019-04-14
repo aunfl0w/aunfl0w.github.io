@@ -6,10 +6,19 @@
     <description>Recent content in 2019 on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 05 Jan 2019 21:52:38 -0500</lastBuildDate>
+    <lastBuildDate>Sun, 14 Apr 2019 15:26:31 -0400</lastBuildDate>
     
 	<atom:link href="https://aunfl0w.github.io/archives/2019/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTML 5 routes &amp; deep links with apache</title>
+      <link>https://aunfl0w.github.io/2019/html5routesapache/</link>
+      <pubDate>Sun, 14 Apr 2019 15:26:31 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2019/html5routesapache/</guid>
+      <description>HTML5 client routing Deep links to client side applications using frameworks that make use of HTML5 routing, such as Angular, can be problematic. The web browser client side application utilizes regular URL paths for client side application navigation that appear in the browser address to be locations of actual resources. This however is not the case, the running application in the browser makes use of javascript pushstate to navigate to states within the client side application and does not request the resource in the browser address bar when running.</description>
+    </item>
     
     <item>
       <title>Networking Observability</title>

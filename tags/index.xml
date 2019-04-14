@@ -6,31 +6,22 @@
     <description>Recent content in Tags on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Sep 2018 22:57:22 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 14 Apr 2019 15:26:31 -0400</lastBuildDate>
     
 	<atom:link href="https://aunfl0w.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Family</title>
-      <link>https://aunfl0w.github.io/tags/family/</link>
-      <pubDate>Sat, 08 Sep 2018 22:57:22 -0400</pubDate>
-      
-      <guid>https://aunfl0w.github.io/tags/family/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Fpw</title>
+      <title>FPW</title>
       <link>https://aunfl0w.github.io/tags/fpw/</link>
-      <pubDate>Sun, 11 Nov 2018 12:04:41 -0500</pubDate>
+      <pubDate>Sun, 14 Apr 2019 15:26:31 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/tags/fpw/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Functional</title>
+      <title>functional</title>
       <link>https://aunfl0w.github.io/tags/functional/</link>
       <pubDate>Fri, 16 Nov 2018 17:58:02 -0500</pubDate>
       
@@ -39,11 +30,11 @@
     </item>
     
     <item>
-      <title>Linux</title>
-      <link>https://aunfl0w.github.io/tags/linux/</link>
-      <pubDate>Fri, 31 Aug 2018 22:47:12 -0400</pubDate>
+      <title>programming</title>
+      <link>https://aunfl0w.github.io/tags/programming/</link>
+      <pubDate>Fri, 16 Nov 2018 17:58:02 -0500</pubDate>
       
-      <guid>https://aunfl0w.github.io/tags/linux/</guid>
+      <guid>https://aunfl0w.github.io/tags/programming/</guid>
       <description></description>
     </item>
     
@@ -57,20 +48,11 @@
     </item>
     
     <item>
-      <title>Programming</title>
-      <link>https://aunfl0w.github.io/tags/programming/</link>
-      <pubDate>Fri, 16 Nov 2018 17:58:02 -0500</pubDate>
+      <title>family</title>
+      <link>https://aunfl0w.github.io/tags/family/</link>
+      <pubDate>Sat, 08 Sep 2018 22:57:22 -0400</pubDate>
       
-      <guid>https://aunfl0w.github.io/tags/programming/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Security</title>
-      <link>https://aunfl0w.github.io/tags/security/</link>
-      <pubDate>Sat, 21 Jul 2018 20:13:49 -0400</pubDate>
-      
-      <guid>https://aunfl0w.github.io/tags/security/</guid>
+      <guid>https://aunfl0w.github.io/tags/family/</guid>
       <description></description>
     </item>
     
@@ -80,6 +62,24 @@
       <pubDate>Fri, 31 Aug 2018 22:47:12 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/tags/x/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://aunfl0w.github.io/tags/linux/</link>
+      <pubDate>Fri, 31 Aug 2018 22:47:12 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>security</title>
+      <link>https://aunfl0w.github.io/tags/security/</link>
+      <pubDate>Sat, 21 Jul 2018 20:13:49 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/tags/security/</guid>
       <description></description>
     </item>
     
