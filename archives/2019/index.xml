@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2019 on Aun&#39;s Blog</title>
@@ -17,7 +17,7 @@
       <pubDate>Sun, 14 Apr 2019 15:26:31 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2019/html5routesapache/</guid>
-      <description>HTML5 client routing Deep links to client side applications using frameworks that make use of HTML5 routing, such as Angular, can be problematic. The web browser client side application utilizes regular URL paths for client side application navigation that appear in the browser address to be locations of actual resources. This however is not the case, the running application in the browser makes use of javascript pushstate to navigate to states within the client side application and does not request the resource in the browser address bar when running.</description>
+      <description>HTML5 client routing Deep links to client side applications using frameworks that make use of HTML5 routing, such as Angular, can be problematic. The web browser client side application utilizes regular URL paths for client side application navigation that appear in the browser address to be locations of actual resources. This however is not the case, the running application in the browser makes use of javascript pushstate to navigate to states within the client side application and does not request the resource shown in the browser address bar when running.</description>
     </item>
     
     <item>

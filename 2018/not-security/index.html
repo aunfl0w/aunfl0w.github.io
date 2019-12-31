@@ -59,20 +59,13 @@ if (!doNotTrack) {
     <div class="column is-9">
         <div class="tile is-child box">
             <div class="content">
-                
-
-<h1 id="we-used-xor-to-keep-your-secrets-safe">We used xor to keep your secrets safe</h1>
-
-<p>If you experience this situation it is time to look closer.  While XOR will make a string that is eyeball safe it isn&rsquo;t going to provide protection from even the casually interested.  Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn&rsquo;t an option for security.  Let&rsquo;s look at some example of why this is such a bad idea.</p>
-
+                <h1 id="we-used-xor-to-keep-your-secrets-safe">We used xor to keep your secrets safe</h1>
+<p>If you experience this situation it is time to look closer.  While XOR will make a string that is eyeball safe it isn't going to provide protection from even the casually interested.  Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn't an option for security.  Let's look at some example of why this is such a bad idea.</p>
 <h2 id="example-of-making-an-xor-encoded-string-for-later-retrieval">example of making an xor encoded string for later retrieval</h2>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./xorenc.py <span style="color:#ae81ff">99</span> <span style="color:#e6db74">&#34;This is the secret password&#34;</span>
 encoding to base64 encoded with <span style="color:#ae81ff">99</span> string This is the secret password
 xored hex string b<span style="color:#e6db74">&#39;370b0a10430a1043170b06431006001106174313021010140c1107&#39;</span></code></pre></div>
-
 <p><a href="https://github.com/aunfl0w/experiments/blob/master/python/xorenc.py">xorenc.py</a></p>
-
 <p>How easy is it to get back by guessing?
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">./xordec.py 370b0a10430a1043170b06431006001106174313021010140c1107
 guess decoded string of hex encoded string 370b0a10430a1043170b06431006001106174313021010140c1107
@@ -88,11 +81,8 @@ try key100
 Sont<span style="color:#e6db74">&#39;nt&#39;</span>sob<span style="color:#e6db74">&#39;tbdubs&#39;</span>wfttphuc
 try key101
 Rnou&amp;ou&amp;rnc&amp;ucetcr&amp;vguuqitb</code></pre></div></p>
-
 <p><a href="https://github.com/aunfl0w/experiments/blob/master/python/xordec.py">xordec.py</a></p>
-
 <p>very easy.</p>
-
 <p>Most of the ideas for these examples are from the challenge questions at <a href="http://cryptopals.com/">cryptopals website</a></p>
 
             </div>

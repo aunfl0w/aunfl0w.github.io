@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Aun&#39;s Blog</title>
@@ -17,7 +17,7 @@
       <pubDate>Sun, 14 Apr 2019 15:26:31 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2019/html5routesapache/</guid>
-      <description>HTML5 client routing Deep links to client side applications using frameworks that make use of HTML5 routing, such as Angular, can be problematic. The web browser client side application utilizes regular URL paths for client side application navigation that appear in the browser address to be locations of actual resources. This however is not the case, the running application in the browser makes use of javascript pushstate to navigate to states within the client side application and does not request the resource in the browser address bar when running.</description>
+      <description>HTML5 client routing Deep links to client side applications using frameworks that make use of HTML5 routing, such as Angular, can be problematic. The web browser client side application utilizes regular URL paths for client side application navigation that appear in the browser address to be locations of actual resources. This however is not the case, the running application in the browser makes use of javascript pushstate to navigate to states within the client side application and does not request the resource shown in the browser address bar when running.</description>
     </item>
     
     <item>
@@ -45,7 +45,7 @@ A Non Functional Aproach This is a sample program that processes a generated sam
       <pubDate>Sun, 11 Nov 2018 12:04:41 -0500</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/freedomtoadd/</guid>
-      <description>Growing Frozen Particle Waves I recently added docker support to Frozen Particle Waves. If you are looking for an OSS project where you can contribute to this is a great option. It isn&amp;rsquo;t finished so you have a great base to contribute updates and exhibit your skills.
+      <description>Growing Frozen Particle Waves I recently added docker support to Frozen Particle Waves. If you are looking for an OSS project where you can contribute to this is a great option. It isn&#39;t finished so you have a great base to contribute updates and exhibit your skills.
 Some additions and updates that you can help with:  Add a storage system and services to add users and cameras. Separate the UI into a more up to date framework such as Angular.</description>
     </item>
     
@@ -82,7 +82,7 @@ Some additions and updates that you can help with:  Add a storage system and ser
       <pubDate>Fri, 31 Aug 2018 22:47:12 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/scale-linux-x/</guid>
-      <description>I&amp;rsquo;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked it up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual I made a backup image of the internal storage for when it gets passed on to the next person that wants windows.</description>
+      <description>I&#39;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked it up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual I made a backup image of the internal storage for when it gets passed on to the next person that wants windows.</description>
     </item>
     
     <item>
@@ -91,7 +91,7 @@ Some additions and updates that you can help with:  Add a storage system and ser
       <pubDate>Sat, 21 Jul 2018 20:13:49 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/not-security/</guid>
-      <description>We used xor to keep your secrets safe If you experience this situation it is time to look closer. While XOR will make a string that is eyeball safe it isn&amp;rsquo;t going to provide protection from even the casually interested. Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn&amp;rsquo;t an option for security.</description>
+      <description>We used xor to keep your secrets safe If you experience this situation it is time to look closer. While XOR will make a string that is eyeball safe it isn&#39;t going to provide protection from even the casually interested. Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn&#39;t an option for security.</description>
     </item>
     
   </channel>

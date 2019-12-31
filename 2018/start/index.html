@@ -59,22 +59,15 @@ if (!doNotTrack) {
     <div class="column is-9">
         <div class="tile is-child box">
             <div class="content">
-                
-
-<h1 id="frozen-particle-waves">Frozen Particle Waves</h1>
-
+                <h1 id="frozen-particle-waves">Frozen Particle Waves</h1>
 <p><a href="https://github.com/aunfl0w/frozen-particle-waves">Frozen Particle Waves</a> is a project I started to learn and demonstrate the use of a <a href="http://spring.io/projects/spring-boot">Spring Boot</a> server app with an Angular client side UI. Currently it can be used to aggregate images from webcams that expose images through http endpoints and also supports basic auth.  It uses Spring Boot as the application server to provide REST endpoints to the client side Angular UI.  Spring security is used to secure the endpoints and handle user authn/authz.</p>
-
-<p>The predecessor project that led to this was a set of cron jobs and shell scripts that cobbled together that gathered images from cameras and wrote them to a web server static content location.  While that worked, it didn&rsquo;t work very well.  Since the scripts wrote images to an active web server static content location frequently the images would be changed while being served resulting in corrupt images.  It also only displayed the latest image.  It was also limited in what additional features could be added.  The shell script version began before smartphones were common and was gathering images from an inexpensive webcam.</p>
-
-<p>Since then smartphones have become ubiquitous.  And of course if you have been using smartphones for a few years you probably have stored away somewhere old smartphones that aren&rsquo;t quite good enough anymore, or have been damaged so that use as an everyday phone aren&rsquo;t an option anymore.  So what do you do with all these old smartphones?  With a little <a href="https://play.google.com/store/apps/details?id=com.pas.webcam">software</a> that turns it into a webcam and some ingenuity to hold it in place they are great wireless cameras you can utilize them again.</p>
-
+<p>The predecessor project that led to this was a set of cron jobs and shell scripts that cobbled together that gathered images from cameras and wrote them to a web server static content location.  While that worked, it didn't work very well.  Since the scripts wrote images to an active web server static content location frequently the images would be changed while being served resulting in corrupt images.  It also only displayed the latest image.  It was also limited in what additional features could be added.  The shell script version began before smartphones were common and was gathering images from an inexpensive webcam.</p>
+<p>Since then smartphones have become ubiquitous.  And of course if you have been using smartphones for a few years you probably have stored away somewhere old smartphones that aren't quite good enough anymore, or have been damaged so that use as an everyday phone aren't an option anymore.  So what do you do with all these old smartphones?  With a little <a href="https://play.google.com/store/apps/details?id=com.pas.webcam">software</a> that turns it into a webcam and some ingenuity to hold it in place they are great wireless cameras you can utilize them again.</p>
 <figure>
     <img src="/img/old-phones-s.jpg"/> <figcaption>
             <h4>Is there a use for these old phones</h4>
         </figcaption>
 </figure>
-
 
 <p>What Frozen Particle Waves is now is a server that will collect images from configured webcams.  It will resize and update the images for your browser and show a history of recent images for each of the cameras it is polling pictures from.</p>
 
