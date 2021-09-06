@@ -6,10 +6,20 @@
     <description>Recent content on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Apr 2019 15:26:31 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jul 2021 22:00:12 -0400</lastBuildDate>
     
 	<atom:link href="https://aunfl0w.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>zpool reimport</title>
+      <link>https://aunfl0w.github.io/2021/zpool-reimport/</link>
+      <pubDate>Fri, 30 Jul 2021 22:00:12 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2021/zpool-reimport/</guid>
+      <description>Import ZFS pool into a new computer In this example hardware has failed and the zpool disks are connected to a new computer. Need to reconstruct the zpool filesystem for continued data use. All disks from the zpool are now connected to a new computer.
+Find the pool root@nas:~# zpool import pool: zfsdata id: 466262796876421602 state: ONLINE status: The pool was last accessed by another system. action: The pool can be imported using its name or numeric identifier and the &amp;#39;-f&amp;#39; flag.</description>
+    </item>
     
     <item>
       <title>HTML 5 routes &amp; deep links with Apache</title>
@@ -45,7 +55,7 @@ A Non Functional Aproach This is a sample program that processes a generated sam
       <pubDate>Sun, 11 Nov 2018 12:04:41 -0500</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/freedomtoadd/</guid>
-      <description>Growing Frozen Particle Waves I recently added docker support to Frozen Particle Waves. If you are looking for an OSS project where you can contribute to this is a great option. It isn&#39;t finished so you have a great base to contribute updates and exhibit your skills.
+      <description>Growing Frozen Particle Waves I recently added docker support to Frozen Particle Waves. If you are looking for an OSS project where you can contribute to this is a great option. It isn&amp;rsquo;t finished so you have a great base to contribute updates and exhibit your skills.
 Some additions and updates that you can help with:  Add a storage system and services to add users and cameras. Separate the UI into a more up to date framework such as Angular.</description>
     </item>
     
@@ -82,7 +92,7 @@ Some additions and updates that you can help with:  Add a storage system and ser
       <pubDate>Fri, 31 Aug 2018 22:47:12 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/scale-linux-x/</guid>
-      <description>I&#39;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked one up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual, I made a backup image of the internal storage in case the next next person wants windows.</description>
+      <description>I&amp;rsquo;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked one up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual, I made a backup image of the internal storage in case the next next person wants windows.</description>
     </item>
     
     <item>
@@ -91,7 +101,7 @@ Some additions and updates that you can help with:  Add a storage system and ser
       <pubDate>Sat, 21 Jul 2018 20:13:49 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/not-security/</guid>
-      <description>We used xor to keep your secrets safe If you experience this situation it is time to look closer. While XOR will make a string that is eyeball safe it isn&#39;t going to provide protection from even the casually interested. Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn&#39;t an option for security.</description>
+      <description>We used xor to keep your secrets safe If you experience this situation it is time to look closer. While XOR will make a string that is eyeball safe it isn&amp;rsquo;t going to provide protection from even the casually interested. Weather this was chosen by the developers due to timeline pressures and added to the fix it later list or just an unfortunate set of google results you need to understand why simple XOR isn&amp;rsquo;t an option for security.</description>
     </item>
     
   </channel>

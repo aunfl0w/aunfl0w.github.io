@@ -59,20 +59,20 @@ if (!doNotTrack) {
     <div class="column is-9">
         <div class="tile is-child box">
             <div class="content">
-                <p>I'm a bargain hunter.  Lately I have been playing with some low powered <a href="https://www.acer.com/ac/en/US/content/model/NX.SHXAA.006">windows cloudbooks</a>.  I picked one up &ldquo;refurbished&rdquo;, the box and packaging looked new, for less than $200.  It has a full HD 14&rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text.  Also, it was repurposed as a computer for a student.  As usual, I made a backup image of the internal storage in case the next next person wants windows.  Then I installed a distro of Linux.  Now I have a cheap remote terminal with great battery life, a decent keyboard, enough RAM to run a few things and if I loose or break it no big deal.</p>
-<p>However, now I find I have the opposite problem with the pixel density.  Instead of too big it's too small.  This system doesn't have the power to run Wayland, and I don't have the patience to deal with the application compatibility issues anyway, so that was not an option.  Gnome has a Hi-dpi scaling option that works with X but only supports <a href="https://wiki.gnome.org/HowDoI/HiDpi">2X scale</a>.  That put it right back to 720p sizes, albiet without the pixelations.  Another solution was needed.</p>
+                <p>I&rsquo;m a bargain hunter.  Lately I have been playing with some low powered <a href="https://www.acer.com/ac/en/US/content/model/NX.SHXAA.006">windows cloudbooks</a>.  I picked one up &ldquo;refurbished&rdquo;, the box and packaging looked new, for less than $200.  It has a full HD 14&rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text.  Also, it was repurposed as a computer for a student.  As usual, I made a backup image of the internal storage in case the next next person wants windows.  Then I installed a distro of Linux.  Now I have a cheap remote terminal with great battery life, a decent keyboard, enough RAM to run a few things and if I loose or break it no big deal.</p>
+<p>However, now I find I have the opposite problem with the pixel density.  Instead of too big it&rsquo;s too small.  This system doesn&rsquo;t have the power to run Wayland, and I don&rsquo;t have the patience to deal with the application compatibility issues anyway, so that was not an option.  Gnome has a Hi-dpi scaling option that works with X but only supports <a href="https://wiki.gnome.org/HowDoI/HiDpi">2X scale</a>.  That put it right back to 720p sizes, albiet without the pixelations.  Another solution was needed.</p>
 <figure>
     <img src="/img/gnome-settings-scale.png"/> <figcaption>
             <h4>GNOME Hi-dpi scale options</h4>
         </figcaption>
 </figure>
 
-<p>I want to have arbitrary scaling.  After a lot of research I found that xrandr could change the scaling factor in X.  It doesn't have the built in gui integration with gnome or remember the setting but hey this is linux and I can easily change it back and forth with one command.  The bash script below has the name of the display which you can get by running xrandr without options and some other resolution options specific to this device.  Now I have arbitrary scaling in X.  I find that 75% is quite pleasing so that is the default if no option is passed.</p>
+<p>I want to have arbitrary scaling.  After a lot of research I found that xrandr could change the scaling factor in X.  It doesn&rsquo;t have the built in gui integration with gnome or remember the setting but hey this is linux and I can easily change it back and forth with one command.  The bash script below has the name of the display which you can get by running xrandr without options and some other resolution options specific to this device.  Now I have arbitrary scaling in X.  I find that 75% is quite pleasing so that is the default if no option is passed.</p>
 <p>Here is the script I used to make setting the scaling easy.  Consult xrandr output for the display value to use.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash 
 </span><span style="color:#75715e"></span>display<span style="color:#f92672">=</span>eDP-1
 scale<span style="color:#f92672">=</span>0.75
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span><span style="color:#f92672">[</span> $1 !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]</span><span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $1 !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
 	scale<span style="color:#f92672">=</span>$1
 <span style="color:#66d9ef">fi</span>
 
@@ -112,6 +112,9 @@ xrandr --output $display --scale <span style="color:#e6db74">${</span>scale<span
     <div class="card-content">
         <h1 class="title is-5">Recent posts</h1>
         
+            <h1><a href="https://aunfl0w.github.io/2021/zpool-reimport/">zpool reimport</a></h1>
+            <time class="has-text-grey-light is-size-7">30 July 2021</time>
+        
             <h1><a href="https://aunfl0w.github.io/2019/html5routesapache/">HTML 5 routes &amp; deep links with Apache</a></h1>
             <time class="has-text-grey-light is-size-7">14 April 2019</time>
         
@@ -124,15 +127,14 @@ xrandr --output $display --scale <span style="color:#e6db74">${</span>scale<span
             <h1><a href="https://aunfl0w.github.io/2018/freedomtoadd/">Growing Frozen Particle Waves</a></h1>
             <time class="has-text-grey-light is-size-7">11 November 2018</time>
         
-            <h1><a href="https://aunfl0w.github.io/2018/process-slaughterhouse/">Process Slaughterhouse</a></h1>
-            <time class="has-text-grey-light is-size-7">5 October 2018</time>
-        
     </div>
 </div>
     <br>
         <div class="card">
     <div class="card-content">
         <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (1)<br>
         
             <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
         
@@ -154,7 +156,7 @@ xrandr --output $display --scale <span style="color:#e6db74">${</span>scale<span
             <span class="icon is-large"><a href="https://twitter.com/aunwick" class="mysocial"><i class="fab fa-twitter fa-3x"></i></a></span>&nbsp;&nbsp;
             <span class="icon is-large"><a href="https://github.com/aunfl0w" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
             <br><br>
-            Copyright &copy; Aun&#39;s Blog 2019 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            Copyright &copy; Aun&#39;s Blog 2021 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
             - <a class="mysocial" href="https://aunfl0w.github.io/about">About</a>
         </p>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aun&#39;s Blog  | family</title>
+    <title>Aun&#39;s Blog  | zpool reimport</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -42,7 +42,7 @@ if (!doNotTrack) {
                 <br>
                 <h1 class="title is-size-1">
                     
-                        #family
+                        zpool reimport
                     
                 </h1>
                 
@@ -55,26 +55,80 @@ if (!doNotTrack) {
     <div class="section">
     
 
-
-
 <div class="columns">
     <div class="column is-9">
         <div class="tile is-child box">
             <div class="content">
+                <h1 id="import-zfs-pool-into-a-new-computer">Import ZFS pool into a new computer</h1>
+<p>In this example hardware has failed and the zpool disks are connected to a new computer.  Need to reconstruct the zpool filesystem for continued data use.  All disks from the zpool are now connected to a new computer.</p>
+<h2 id="find-the-pool">Find the pool</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@nas:~# zpool import
+   pool: zfsdata
+     id: <span style="color:#ae81ff">466262796876421602</span>
+  state: ONLINE
+ status: The pool was last accessed by another system.
+ action: The pool can be imported using its name or numeric identifier and
+	the <span style="color:#e6db74">&#39;-f&#39;</span> flag.
+   see: http://zfsonlinux.org/msg/ZFS-8000-EY
+ config:
 
-                <article class="media">
-                    <div class="media-content">
-                        <div class="content">
-                            <p class="title is-4"><a href="/2018/not-the-view/">Not the view I was expecting</a></p>
-                            <p class="subtitle is-size-6 has-text-grey-light">
-                                Published at September 8, 2018 &middot;
-                                <i class="far fa-clock"></i>&nbsp;2 min read
-                            </p>
-                            <p>Not the view I was expecting It was a wonderful clear labor day on the river. The water was cool and flowing east just west of the Lake Wylie dam. A break from floating on a tube to climb a tree to a rope swing ends early with a fall. A gash to the calf and a splash in the water. In short time my daughter will be whisked away in an ambulance....</p>
-                        </div>
-                    </div>
-                </article>
-                <br>
+	zfsdata     ONLINE
+	  raidz1-0  ONLINE
+	    sdb2    ONLINE
+	    sdc2    ONLINE
+	    sdd2    ONLINE
+	    sde2    ONLINE</code></pre></div>
+<h2 id="import-the-pool">Import the pool</h2>
+<p>In this case I have a zpool from BSD that is being imported to a Linux system</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@nas:~# zpool import zfsdata
+cannot import <span style="color:#e6db74">&#39;zfsdata&#39;</span>: pool was previously in use from another system.
+Last accessed by  <span style="color:#f92672">(</span>hostid<span style="color:#f92672">=</span>83b027b5<span style="color:#f92672">)</span> at Wed Jun <span style="color:#ae81ff">23</span> 14:04:59 <span style="color:#ae81ff">2021</span>
+The pool can be imported, use <span style="color:#e6db74">&#39;zpool import -f&#39;</span> to import the pool.
+root@nas:~# zpool import -f zfsdata
+root@nas:~# df -h /zfsdata
+Filesystem      Size  Used Avail Use% Mounted on
+zfsdata         5.3T  2.7T  2.7T  50% /zfsdata</code></pre></div>
+<h2 id="upgrade">Upgrade</h2>
+<p>In this case the pool can be upgraded to support new features.  Once upgraded the pool will no longer work on the old system.  In this scenario the old computer is non functional so going back is not an option.  Start an update and the scrub new pool to verify integrity.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@nas:/zfsdata# zpool upgrade zfsdata
+This system supports ZFS pool feature flags.
+
+Successfully upgraded <span style="color:#e6db74">&#39;zfsdata&#39;</span> from version <span style="color:#ae81ff">28</span> to feature flags.
+Enabled the following features on <span style="color:#e6db74">&#39;zfsdata&#39;</span>:
+  async_destroy
+  empty_bpobj
+  lz4_compress
+  multi_vdev_crash_dump
+  spacemap_histogram
+  enabled_txg
+  hole_birth
+  extensible_dataset
+…
+
+root@nas:/zfsdata# zpool scrub zfsdata
+root@nas:/zfsdata# zpool status -v 
+  pool: zfsdata
+ state: ONLINE
+  scan: scrub in progress since Sat Sep  <span style="color:#ae81ff">4</span> 18:08:30 <span style="color:#ae81ff">2021</span>
+	155G scanned at 344M/s, 84.1G issued at 187M/s, 3.49T total
+	0B repaired, 2.35% <span style="color:#66d9ef">done</span>, <span style="color:#ae81ff">0</span> days 05:19:17 to go
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	zfsdata     ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	  raidz1-0  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    sdb2    ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    sdc2    ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    sdd2    ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+	    sde2    ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span></code></pre></div>
+<h2 id="verify-drive-smart-info">Verify drive smart info</h2>
+<p>Instal smartmontools or package with smartctl for your distro.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> drive in <span style="color:#f92672">{</span>b..e<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">do</span> 
+	smartctl -i /dev/sd$drive
+<span style="color:#66d9ef">done</span>
+
+Adjust smartctl command and review output based on your specific device.</code></pre></div>
 
             </div>
         </div>

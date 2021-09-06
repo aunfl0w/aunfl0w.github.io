@@ -6,10 +6,20 @@
     <description>Recent content in linux on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Aug 2018 22:47:12 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jul 2021 22:00:12 -0400</lastBuildDate>
     
 	<atom:link href="https://aunfl0w.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>zpool reimport</title>
+      <link>https://aunfl0w.github.io/2021/zpool-reimport/</link>
+      <pubDate>Fri, 30 Jul 2021 22:00:12 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2021/zpool-reimport/</guid>
+      <description>Import ZFS pool into a new computer In this example hardware has failed and the zpool disks are connected to a new computer. Need to reconstruct the zpool filesystem for continued data use. All disks from the zpool are now connected to a new computer.
+Find the pool root@nas:~# zpool import pool: zfsdata id: 466262796876421602 state: ONLINE status: The pool was last accessed by another system. action: The pool can be imported using its name or numeric identifier and the &amp;#39;-f&amp;#39; flag.</description>
+    </item>
     
     <item>
       <title>Arbitrary Scaling X</title>
@@ -17,7 +27,7 @@
       <pubDate>Fri, 31 Aug 2018 22:47:12 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/scale-linux-x/</guid>
-      <description>I&#39;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked one up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual, I made a backup image of the internal storage in case the next next person wants windows.</description>
+      <description>I&amp;rsquo;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked one up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual, I made a backup image of the internal storage in case the next next person wants windows.</description>
     </item>
     
   </channel>
