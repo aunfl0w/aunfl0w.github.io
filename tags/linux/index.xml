@@ -6,10 +6,34 @@
     <description>Recent content in linux on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Jul 2021 22:00:12 -0400</lastBuildDate>
+    <lastBuildDate>Wed, 13 Oct 2021 22:00:12 -0400</lastBuildDate><atom:link href="https://aunfl0w.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mount block device image</title>
+      <link>https://aunfl0w.github.io/2021/mount-block-image/</link>
+      <pubDate>Wed, 13 Oct 2021 22:00:12 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2021/mount-block-image/</guid>
+      <description>Mount a block image An image of a block divice has been created with dd for data recovery purposes. Mount the filesystem from the image and access files.
+Review image partition information $ fdisk -lu adrian-connor.img Disk adrian-connor.img: 74.51 GiB, 80000000000 bytes, 156250000 sectors Units: sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disklabel type: dos Disk identifier: 0xf52bcf0e Device Boot Start End Sectors Size Id Type adrian-connor.</description>
+    </item>
     
-	<atom:link href="https://aunfl0w.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DevOps notes</title>
+      <link>https://aunfl0w.github.io/2021/devops/</link>
+      <pubDate>Mon, 06 Sep 2021 19:00:12 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2021/devops/</guid>
+      <description>Notes from a DevOps class.</description>
+    </item>
     
+    <item>
+      <title>Linux kernel module basics</title>
+      <link>https://aunfl0w.github.io/2021/lkm/</link>
+      <pubDate>Thu, 19 Aug 2021 21:00:12 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2021/lkm/</guid>
+      <description>A basic example of a loadable kernel module, loading, debugging and build.</description>
+    </item>
     
     <item>
       <title>zpool reimport</title>
@@ -27,7 +51,7 @@ Find the pool root@nas:~# zpool import pool: zfsdata id: 466262796876421602 stat
       <pubDate>Fri, 31 Aug 2018 22:47:12 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2018/scale-linux-x/</guid>
-      <description>I&amp;rsquo;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked one up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;rdquo; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual, I made a backup image of the internal storage in case the next next person wants windows.</description>
+      <description>I&amp;rsquo;m a bargain hunter. Lately I have been playing with some low powered windows cloudbooks. I picked one up &amp;ldquo;refurbished&amp;rdquo;, the box and packaging looked new, for less than $200. It has a full HD 14&amp;quot; screen which I was searching for as the similar size 720p model I had before was a little on the pixeley side for text. Also, it was repurposed as a computer for a student. As usual, I made a backup image of the internal storage in case the next next person wants windows.</description>
     </item>
     
   </channel>

@@ -6,11 +6,7 @@
     <description>Recent content in security on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Jul 2018 20:13:49 -0400</lastBuildDate>
-    
-	<atom:link href="https://aunfl0w.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 21 Jul 2018 20:13:49 -0400</lastBuildDate><atom:link href="https://aunfl0w.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>XOR NOT Security</title>
       <link>https://aunfl0w.github.io/2018/not-security/</link>

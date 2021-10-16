@@ -6,11 +6,7 @@
     <description>Recent content in FPW on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Apr 2019 15:26:31 -0400</lastBuildDate>
-    
-	<atom:link href="https://aunfl0w.github.io/tags/fpw/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 14 Apr 2019 15:26:31 -0400</lastBuildDate><atom:link href="https://aunfl0w.github.io/tags/fpw/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTML 5 routes &amp; deep links with Apache</title>
       <link>https://aunfl0w.github.io/2019/html5routesapache/</link>

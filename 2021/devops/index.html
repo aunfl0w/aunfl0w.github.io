@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Aun&#39;s Blog  | DevOps notes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://aunfl0w.github.io/css/blog.css" />
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-125094479-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://aunfl0w.github.io">Home</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://aunfl0w.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        DevOps notes
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                <h1 id="devops-notes">DevOps Notes</h1>
+<h2 id="three-ways">Three ways</h2>
+<pre><code>• Systems Thinking
+• Amplifying feedback loops
+• Culture of continuous experimentation and learning
+</code></pre>
+<h2 id="systems-thinking">Systems thinking</h2>
+<p>Think of the overall outcome when optimizing parts.</p>
+<h2 id="amplify-feedback-loops">Amplify feedback loops</h2>
+<p>Observe the output changes and adjust the input causing it quickly</p>
+<h2 id="continuous-experimentation-and-learning">Continuous experimentation and learning</h2>
+<p>Try things out and see what works.  Avoid analysis paralysis with working code.  Try new ideas and encourage sharing.</p>
+<h2 id="devops-methodologies">DevOps methodologies</h2>
+<ol>
+<li>People over Process over Tools</li>
+<li>Continuous delivery has a quick feedback cycle for small batches of:
+• code
+• build and automated test
+• delivery</li>
+<li>Lean Management
+• Work in small batches
+• Work in progress limits
+• Feedback loops
+• Visualization</li>
+<li>Visible Ops-Style Change Control
+• Eliminate fragile artifacts
+• Create a repeatable build process
+• Manage dependencies
+• Create an environment of continuous improvement</li>
+<li>Infrastructure as Code
+• System treated like code
+• Checked into source control
+• Reviewed, built, and tested</li>
+</ol>
+<h2 id="10-practices-for-devops-success">10 Practices for DevOps success</h2>
+<pre><code>• Purposeful chaos and recovery 
+• Blue/Green deployment on identical live/offline systems for quick forward testing and rollback
+• Dependency Injection (or service discovery and other similar patterns of decoupling)
+• Andon Cords (anyone on the line can stop the process to work on a problem)
+• The Cloud (api driven way to create and control system infra as a program)
+• Embedded Teams
+• Blameless Postmortems (there is never a single cause of an incident)
+• Public Status Pages (see transparent status pages document)
+• Developers on Call
+• Incident Command System
+</code></pre>
+<h2 id="the-wall-of-confusion">The wall of confusion</h2>
+<p>Teams are often setup to work in ways that conflict and encourages conflicts of interest and limit cooperation to “perform”</p>
+<h2 id="blameless-postmortems">Blameless Postmortems</h2>
+<ol>
+<li>
+<p>Do it within 48 hours of incident</p>
+</li>
+<li>
+<p>Have the team build a timeline</p>
+</li>
+<li>
+<p>Have a third party run the meeting
+Acquire the human and system events in a Timeline, preferably UTC if multiple timezones involved.</p>
+</li>
+<li>
+<p>Describe the incident</p>
+</li>
+<li>
+<p>Describe the root cause</p>
+</li>
+<li>
+<p>How was the incident resolved</p>
+</li>
+<li>
+<p>Timeline of events and actions taken</p>
+</li>
+<li>
+<p>How were customers impacted</p>
+</li>
+<li>
+<p>Remediation actions</p>
+</li>
+</ol>
+<p>Rules for communication</p>
+<ol>
+<li>Admit failure</li>
+<li>Sound human</li>
+<li>Have a communication channel</li>
+<li>Be authentic, have someone find the stakeholders and communicate the issue.</li>
+</ol>
+<p>Don’t add process unless everyone thinks it is needed.  Remove process that is no longer needed.  The more process walls you have the more Conway’s law will rule and progress will slow.</p>
+<h2 id="kaizen">Kaizen</h2>
+<p>Plan → Do → Check → Act</p>
+<p>Go see for yourself where the issue is reporting, reports and metrics are useful but go see the real system</p>
+<p>5 Whys</p>
+<ul>
+<li>Why did it happen</li>
+<li>Why did that happen…</li>
+<li>Look for underlying causes not symptoms.  Look for real causes, not enough time or human error is not an acceptable answer.</li>
+</ul>
+<h2 id="infrastructure-as-code-iac">Infrastructure as code (IaC)</h2>
+<p>Treat systems like code, use editor, version control, automated testing and so on.</p>
+<h2 id="cmdbs">CMDBs</h2>
+<p>Suggestion to move towards containers and orchestration without app config and state embedded.  Use an external configuration system or discovery system to separate container image and config for flexibility.</p>
+<h3 id="app-configuration--orchestration-tools">App configuration &amp; orchestration tools</h3>
+<pre><code>• etcd
+• zookeeper
+• consul
+</code></pre>
+<h3 id="orchestration">Orchestration</h3>
+<pre><code>• Mesos
+• Kubernetes
+• Docker Swarm
+</code></pre>
+<h2 id="cd-test-patterns">CD Test patterns</h2>
+<p>Early and Rapid feedback is the goal.  Tests should run fast and reliably so developers get good feedback on changes.  Unreliable and slow tests must be dealt with.  Deal with slow tests by moving them to another process such as nightly full test if required.</p>
+<ul>
+<li><strong>Test Driven Development TDD:</strong> Write test then develop code to reach desired state</li>
+<li><strong>Behavior Driven Development BDD:</strong> Work with stakeholders to document desired state then write code to meet.  Cucumber and GWT are examples of a DSL and System to execute the DSL.</li>
+<li><strong>Acceptance Test Driven Development ATDD:</strong> Write tests from the users perspective.</li>
+</ul>
+<h2 id="build-tools">Build tools</h2>
+<p>All the usual tools but the goal is it runs automatically by developer on desktop and as a requirement on check in and is reliable and appropriate for the need.  Avoid waste, get something that does the job and does it quickly.  Unused features are unneeded features.</p>
+<h2 id="failure-patterns">Failure patterns</h2>
+<p>Many failures are due to integration points.
+Example:
+Cascading outage – countered by circuit breakers
+Deviations from 12 factor applications</p>
+<h2 id="lean-approach-in-a-nutshell">Lean approach in a nutshell</h2>
+<pre><code>• Build
+• Measure
+• Learn
+</code></pre>
+<p>repeat</p>
+<h2 id="security-areas">Security areas</h2>
+<pre><code>• System
+• Application 
+• Application events 
+• Anomalies
+</code></pre>
+<h2 id="logging">Logging</h2>
+<pre><code>• What
+• When
+• Where did it happen
+• Who
+• Where did it come from
+</code></pre>
+<h2 id="sre-tools-topics">SRE Tools Topics</h2>
+<p>In general, tools that can be used by multiple teams are more useful.
+Collect distributed logs into a central, or logically central, view for monitoring, reporting and analysis.</p>
+<p>Splunk, ELK
+Pagerduty, Viktorops, Flapjack
+Status pages and metrics automation
+Security monitoring tools</p>
+<h2 id="conferences">Conferences</h2>
+<pre><code>• DevOpsDays
+• Velocity
+• DevOps Enterprise Summit
+</code></pre>
+<h2 id="books">Books</h2>
+<pre><code>• Visible Ops
+• Continuous Delivery – Farley &amp; Humble
+• Release IT!
+• Effective DevOps – Davis &amp; Daniels
+• Lean Software Development 
+• Web Operations – Allspaw
+• The Practice of Cloud Systems Administration
+• The DevOps Handbook
+• Leading The Transformation – Mouser &amp; Gruver
+• The Phoenix Project – new version of Goldratt’s “The Goal”
+</code></pre>
+<h2 id="ongoing-learning">Ongoing learning</h2>
+<ul>
+<li>devopsweekly.com @garethr</li>
+<li>devops.com @devopsdotcom @ashimmy</li>
+<li>devopscafe.org @botchgalupe @damonedwards</li>
+<li>DevOps Audit Defense Toolkit</li>
+<li>Rugged Manifesto</li>
+</ul>
+<h2 id="devops-skills">DevOps skills</h2>
+<p>T Shaped individuals, deep in one area but know enough about the rest of the whole to work with all teams.</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/family">family</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/fpw">fpw</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/functional">functional</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/linux">linux</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/observability">observability</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/programming">programming</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/security">security</a></span>
+        
+            <span class="tag"><a href="https://aunfl0w.github.io/tags/x">x</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">mount block device image</a></h1>
+            <time class="has-text-grey-light is-size-7">13 October 2021</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2021/devops/">DevOps notes</a></h1>
+            <time class="has-text-grey-light is-size-7">6 September 2021</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2021/lkm/">Linux kernel module basics</a></h1>
+            <time class="has-text-grey-light is-size-7">19 August 2021</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2021/zpool-reimport/">zpool reimport</a></h1>
+            <time class="has-text-grey-light is-size-7">30 July 2021</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2019/html5routesapache/">HTML 5 routes &amp; deep links with Apache</a></h1>
+            <time class="has-text-grey-light is-size-7">14 April 2019</time>
+        
+    </div>
+</div>
+    <br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (4)<br>
+        
+            <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
+        
+            <a href="https://aunfl0w.github.io/archives/2018">2018</a> (7)<br>
+        
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://twitter.com/aunwick" class="mysocial"><i class="fab fa-twitter fa-3x"></i></a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/aunfl0w" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; Aun&#39;s Blog 2021 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://aunfl0w.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

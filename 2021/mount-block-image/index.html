@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aun&#39;s Blog  | Process Slaughterhouse</title>
+    <title>Aun&#39;s Blog  | mount block device image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -42,7 +42,7 @@ if (!doNotTrack) {
                 <br>
                 <h1 class="title is-size-1">
                     
-                        Process Slaughterhouse
+                        mount block device image
                     
                 </h1>
                 
@@ -59,115 +59,19 @@ if (!doNotTrack) {
     <div class="column is-9">
         <div class="tile is-child box">
             <div class="content">
-                <h1 id="cattle-not-pets">Cattle not pets</h1>
-<p>If you are running a stateless scale out application the cattle not pets mantra will be stuck in your thoughts.  Sick processes and whole container environments that misbehave are taken out back of the server and executed.  For the benefit of those handling on call support and for immediate recovery the easy button is great.  However, it ignores the real problem.  If you had a leaky roof the long term solution is not get more buckets to catch the water.  To be clear I am talking about non functional program problems, if your login doesn&rsquo;t handle case sensitive input debug that in test.  We are talking about the application that passes all your automated and manual testing goes catatonic or nuclear in production.</p>
-<h1 id="what-could-go-wrong">What could go wrong&hellip;</h1>
-<ul>
-<li>The failure/replacement rate could exceed capacity
-<ul>
-<li>Slaugherhouse overload</li>
-</ul>
-</li>
-<li>Failure of failure detection
-<ul>
-<li>Zombie apocalypse</li>
-</ul>
-</li>
-<li>Continuous improvement blind spot
-<ul>
-<li>All evidence of the bug was lost when the sick process and container was eliminated</li>
-</ul>
-</li>
-<li>They said reproduce it in test environment
-<ul>
-<li>rolls eyes! Sure, production is just like test</li>
-<li>Put a check in this space  _  if all firmware, hardware, and software is the same between test and production</li>
-</ul>
-</li>
-<li>In the absence of data
-<ul>
-<li>Development &ldquo;Tunes the application&rdquo; to fix the issues
-<ul>
-<li>Meaning, We added worse bugs that we know how to fix</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>Clearly we should have the ability to gather information when warranted.  When is it warranted?  Your situations will vary.  I suggest some practice before you find yourself on a call with a 2-1 manager to engineer ratio in either of the zombie apocalypse or slaugherhouse overload scenarios.  Practice before the main performance is recommended.</p>
-<h1 id="how-to-gather-information">How to gather information</h1>
-<ul>
-<li>Gain observability without blowing up the container
-<ul>
-<li>What limits trigger the failure action
-<ul>
-<li>What commands can you run without triggering the reaper</li>
-</ul>
-</li>
-<li>Where can you save output for later research</li>
-</ul>
-</li>
-</ul>
-<p>Warning: The current state of GNU Linux process inspection tools has many man pages with vague warning about limitations or that tool no longer works.  See man pldd(1) for example.</p>
-<p>Familiarize yourself with <a href="http://www.brendangregg.com/linuxperf.html">Brendan Gregg&rsquo;s</a> performance material and ensure that it can be used in your environment.</p>
-<p>Run the app on a system with <a href="http://dtrace.org/blogs/about/">DTrace</a> for more visibility.</p>
-<h2 id="have-a-conversation-with-the-system">Have a conversation with the system</h2>
-<ul>
-<li>Tell me about yourself
-<ul>
-<li>cat /proc/cpuinfo</li>
-<li>free -h</li>
-</ul>
-</li>
-<li>Are you feeling ok
-<ul>
-<li>dmesg</li>
-<li>vmstat 1 10</li>
-<li>netstat -tcp</li>
-</ul>
-</li>
-<li>Does you feeling stress today or have you given up on computing
-<ul>
-<li>DTrace</li>
-<li>perf</li>
-</ul>
-</li>
-</ul>
-<h2 id="have-a-conversation-with-the-process">Have a conversation with the process</h2>
-<ul>
-<li>Tell me about yourself
-<ul>
-<li>ps -C {process name} -T &ndash;sort s -o  pid,lwp,s,nlwp,pcpu,cputime,stime,ucmd</li>
-<li>ls -l /proc/{pid}/cwd</li>
-<li>ls -l /proc/{pid}/fd</li>
-<li>sed -z &rsquo;s/$/\n/' /proc/{pid}/environ</li>
-<li>ls -l /proc/{pid}/maps</li>
-</ul>
-</li>
-<li>What are you doing
-<ul>
-<li>pstack</li>
-<li>DTrace</li>
-<li>perf</li>
-</ul>
-</li>
-</ul>
-<h2 id="ask-the-process-tough-questions">Ask the process tough questions</h2>
-<ul>
-<li>Do you have any hangups
-<ul>
-<li>For example in java
-<ul>
-<li>kill -3 {pid}</li>
-<li>jstack</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>gcore</li>
-</ul>
-<h1 id="endgame">Endgame</h1>
-<p>Given enough data on the bug state try to create the scenario in test.  Failing that add additional tracing in the suspected areas.</p>
+                <h1 id="mount-a-block-image">Mount a block image</h1>
+<p>An image of a block divice has been created with <code>dd</code> for data recovery purposes.  Mount the filesystem from the image and access files.</p>
+<h2 id="review-image-partition-information">Review image partition information</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ fdisk -lu adrian-connor.img
+Disk adrian-connor.img: 74.51 GiB, <span style="color:#ae81ff">80000000000</span> bytes, <span style="color:#ae81ff">156250000</span> sectors
+Units: sectors of <span style="color:#ae81ff">1</span> * 512 <span style="color:#f92672">=</span> <span style="color:#ae81ff">512</span> bytes
+Sector size <span style="color:#f92672">(</span>logical/physical<span style="color:#f92672">)</span>: <span style="color:#ae81ff">512</span> bytes / <span style="color:#ae81ff">512</span> bytes
+I/O size <span style="color:#f92672">(</span>minimum/optimal<span style="color:#f92672">)</span>: <span style="color:#ae81ff">512</span> bytes / <span style="color:#ae81ff">512</span> bytes
+Disklabel type: dos
+Disk identifier: 0xf52bcf0e
+
+Device             Boot Start       End   Sectors  Size Id Type
+adrian-connor.img1         <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">156232124</span> <span style="color:#ae81ff">156232062</span> 74.5G  <span style="color:#ae81ff">7</span> HPFS/NTFS/exFAT</code></pre></div>
 
             </div>
         </div>
