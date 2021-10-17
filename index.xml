@@ -6,11 +6,11 @@
     <description>Recent content on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 Oct 2021 12:00:12 -0400</lastBuildDate><atom:link href="https://aunfl0w.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Oct 2021 12:00:12 -0400</lastBuildDate><atom:link href="https://aunfl0w.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Alter system calls with LD_PRELOAD</title>
       <link>https://aunfl0w.github.io/2021/preload-fix/</link>
-      <pubDate>Sat, 16 Oct 2021 12:00:12 -0400</pubDate>
+      <pubDate>Sun, 17 Oct 2021 12:00:12 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2021/preload-fix/</guid>
       <description>Use LD_PRELOAD to alter library calls I have a program that is failing because it is making a system call to change permissins on a file with chmod, fchmodat, and fchmod -S 2. The program does not own the file, and doesn&amp;rsquo;t need to change the permission but fails with -1 EPERM on this call. This was determined with strace -f -e chmod,fchmod,fchmodat $program
