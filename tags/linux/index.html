@@ -65,13 +65,28 @@ if (!doNotTrack) {
                 <article class="media">
                     <div class="media-content">
                         <div class="content">
-                            <p class="title is-4"><a href="/2021/mount-block-image/">mount block device image</a></p>
+                            <p class="title is-4"><a href="/2021/preload-fix/">Alter system calls with LD_PRELOAD</a></p>
                             <p class="subtitle is-size-6 has-text-grey-light">
-                                Published at October 13, 2021 &middot;
-                                <i class="far fa-clock"></i>&nbsp;1 min read
+                                Published at October 16, 2021 &middot;
+                                <i class="far fa-clock"></i>&nbsp;4 min read
                             </p>
-                            <p>Mount a block image An image of a block divice has been created with dd for data recovery purposes. Mount the filesystem from the image and access files.
-Review image partition information $ fdisk -lu adrian-connor.img Disk adrian-connor.img: 74.51 GiB, 80000000000 bytes, 156250000 sectors Units: sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disklabel type: dos Disk identifier: 0xf52bcf0e Device Boot Start End Sectors Size Id Type adrian-connor....</p>
+                            <p>Use LD_PRELOAD to alter library calls I have a program that is failing because it is making a system call to change permissins on a file with chmod, fchmodat, and fchmod -S 2. The program does not own the file, and doesn&rsquo;t need to change the permission but fails with -1 EPERM on this call. This was determined with strace -f -e chmod,fchmod,fchmodat $program
+Example program This program simulates the behaviour of the application with the issue....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2021/mount-block-image/">Mount a block device image</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at October 16, 2021 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>How to mount a block device image Task: An image of a block divice has been created with dd for data recovery purposes. Mount the filesystem from the image and access files.
+Review image partition information Confirm that the image size matches the size of the source block device. If the size is incorrect review the block device options or try another program such as ddrescue to read a failing block device....</p>
                         </div>
                     </div>
                 </article>
@@ -166,8 +181,11 @@ Find the pool root@nas:~# zpool import pool: zfsdata id: 466262796876421602 stat
     <div class="card-content">
         <h1 class="title is-5">Recent posts</h1>
         
-            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">mount block device image</a></h1>
-            <time class="has-text-grey-light is-size-7">13 October 2021</time>
+            <h1><a href="https://aunfl0w.github.io/2021/preload-fix/">Alter system calls with LD_PRELOAD</a></h1>
+            <time class="has-text-grey-light is-size-7">16 October 2021</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">Mount a block device image</a></h1>
+            <time class="has-text-grey-light is-size-7">16 October 2021</time>
         
             <h1><a href="https://aunfl0w.github.io/2021/devops/">DevOps notes</a></h1>
             <time class="has-text-grey-light is-size-7">6 September 2021</time>
@@ -178,9 +196,6 @@ Find the pool root@nas:~# zpool import pool: zfsdata id: 466262796876421602 stat
             <h1><a href="https://aunfl0w.github.io/2021/zpool-reimport/">zpool reimport</a></h1>
             <time class="has-text-grey-light is-size-7">30 July 2021</time>
         
-            <h1><a href="https://aunfl0w.github.io/2019/html5routesapache/">HTML 5 routes &amp; deep links with Apache</a></h1>
-            <time class="has-text-grey-light is-size-7">14 April 2019</time>
-        
     </div>
 </div>
     <br>
@@ -188,7 +203,7 @@ Find the pool root@nas:~# zpool import pool: zfsdata id: 466262796876421602 stat
     <div class="card-content">
         <h1 class="title is-5">Archives</h1>
         
-            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (4)<br>
+            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (5)<br>
         
             <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
         

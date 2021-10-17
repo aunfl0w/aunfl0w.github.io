@@ -6,15 +6,25 @@
     <description>Recent content in linux on Aun&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Oct 2021 22:00:12 -0400</lastBuildDate><atom:link href="https://aunfl0w.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Oct 2021 12:00:12 -0400</lastBuildDate><atom:link href="https://aunfl0w.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>mount block device image</title>
+      <title>Alter system calls with LD_PRELOAD</title>
+      <link>https://aunfl0w.github.io/2021/preload-fix/</link>
+      <pubDate>Sat, 16 Oct 2021 12:00:12 -0400</pubDate>
+      
+      <guid>https://aunfl0w.github.io/2021/preload-fix/</guid>
+      <description>Use LD_PRELOAD to alter library calls I have a program that is failing because it is making a system call to change permissins on a file with chmod, fchmodat, and fchmod -S 2. The program does not own the file, and doesn&amp;rsquo;t need to change the permission but fails with -1 EPERM on this call. This was determined with strace -f -e chmod,fchmod,fchmodat $program
+Example program This program simulates the behaviour of the application with the issue.</description>
+    </item>
+    
+    <item>
+      <title>Mount a block device image</title>
       <link>https://aunfl0w.github.io/2021/mount-block-image/</link>
-      <pubDate>Wed, 13 Oct 2021 22:00:12 -0400</pubDate>
+      <pubDate>Sat, 16 Oct 2021 11:00:12 -0400</pubDate>
       
       <guid>https://aunfl0w.github.io/2021/mount-block-image/</guid>
-      <description>Mount a block image An image of a block divice has been created with dd for data recovery purposes. Mount the filesystem from the image and access files.
-Review image partition information $ fdisk -lu adrian-connor.img Disk adrian-connor.img: 74.51 GiB, 80000000000 bytes, 156250000 sectors Units: sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disklabel type: dos Disk identifier: 0xf52bcf0e Device Boot Start End Sectors Size Id Type adrian-connor.</description>
+      <description>How to mount a block device image Task: An image of a block divice has been created with dd for data recovery purposes. Mount the filesystem from the image and access files.
+Review image partition information Confirm that the image size matches the size of the source block device. If the size is incorrect review the block device options or try another program such as ddrescue to read a failing block device.</description>
     </item>
     
     <item>

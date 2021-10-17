@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aun&#39;s Blog  | mount block device image</title>
+    <title>Aun&#39;s Blog  | Mount a block device image</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -42,7 +42,7 @@ if (!doNotTrack) {
                 <br>
                 <h1 class="title is-size-1">
                     
-                        mount block device image
+                        Mount a block device image
                     
                 </h1>
                 
@@ -59,10 +59,14 @@ if (!doNotTrack) {
     <div class="column is-9">
         <div class="tile is-child box">
             <div class="content">
-                <h1 id="mount-a-block-image">Mount a block image</h1>
-<p>An image of a block divice has been created with <code>dd</code> for data recovery purposes.  Mount the filesystem from the image and access files.</p>
+                <h1 id="how-to-mount-a-block-device-image">How to mount a block device image</h1>
+<p>Task: An image of a block divice has been created with <code>dd</code> for data recovery purposes.  Mount the filesystem from the image and access files.</p>
 <h2 id="review-image-partition-information">Review image partition information</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ fdisk -lu adrian-connor.img
+<p>Confirm that the image size matches the size of the source block device.  If the size is incorrect review the block device options or try another program such as <code>ddrescue</code> to read a failing block device.  In this case the image is the byte size reported by the block device and the partition information appears valid for the image.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -l adrian-connor.img
+-rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">80000000000</span> Oct <span style="color:#ae81ff">10</span> 20:26 adrian-connor.img
+
+$ fdisk -lu adrian-connor.img
 Disk adrian-connor.img: 74.51 GiB, <span style="color:#ae81ff">80000000000</span> bytes, <span style="color:#ae81ff">156250000</span> sectors
 Units: sectors of <span style="color:#ae81ff">1</span> * 512 <span style="color:#f92672">=</span> <span style="color:#ae81ff">512</span> bytes
 Sector size <span style="color:#f92672">(</span>logical/physical<span style="color:#f92672">)</span>: <span style="color:#ae81ff">512</span> bytes / <span style="color:#ae81ff">512</span> bytes
@@ -72,6 +76,16 @@ Disk identifier: 0xf52bcf0e
 
 Device             Boot Start       End   Sectors  Size Id Type
 adrian-connor.img1         <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">156232124</span> <span style="color:#ae81ff">156232062</span> 74.5G  <span style="color:#ae81ff">7</span> HPFS/NTFS/exFAT</code></pre></div>
+<h1 id="mount-the-image">Mount the image</h1>
+<p><code>losetup</code> can be used to expose the block image as a device with partitions included.  However, it is also possible to skip this step and mount the partition using the partition offset.  In this case it starts at 63 sectors * 512 bytes offset into the device.  Since this is a block device image as opposed to a block loop that exposes partition information we will tell mount to offset into the image at the partiion start.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mount -o loop,ro,offset=$((512 * 63)) -t ntfs adrian-connor.img /mnt/d1</span>
+<span style="color:#75715e"># mount |grep d1</span>
+/media/aun/af376427-5802-4e1e-aafb-d0893ce855ae/adrian-connor.img on /mnt/d1 type fuseblk <span style="color:#f92672">(</span>ro,relatime,user_id<span style="color:#f92672">=</span>0,group_id<span style="color:#f92672">=</span>0,allow_other,blksize<span style="color:#f92672">=</span>4096<span style="color:#f92672">)</span>
+<span style="color:#75715e"># df /mnt/d1</span>
+Filesystem     1K-blocks     Used Available Use% Mounted on
+/dev/loop8      <span style="color:#ae81ff">78116028</span> <span style="color:#ae81ff">20436396</span>  <span style="color:#ae81ff">57679632</span>  27% /mnt/d1</code></pre></div>
+<h1 id="read-data-from-image-as-needed">Read data from image as needed</h1>
+<p>Now the disk is mounted under /mnt/d1 as read only.  Recover files as needed.  When finished <code>umount /mnt/d1</code> as root.</p>
 
             </div>
         </div>
@@ -105,8 +119,11 @@ adrian-connor.img1         <span style="color:#ae81ff">63</span> <span style="co
     <div class="card-content">
         <h1 class="title is-5">Recent posts</h1>
         
-            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">mount block device image</a></h1>
-            <time class="has-text-grey-light is-size-7">13 October 2021</time>
+            <h1><a href="https://aunfl0w.github.io/2021/preload-fix/">Alter system calls with LD_PRELOAD</a></h1>
+            <time class="has-text-grey-light is-size-7">16 October 2021</time>
+        
+            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">Mount a block device image</a></h1>
+            <time class="has-text-grey-light is-size-7">16 October 2021</time>
         
             <h1><a href="https://aunfl0w.github.io/2021/devops/">DevOps notes</a></h1>
             <time class="has-text-grey-light is-size-7">6 September 2021</time>
@@ -117,9 +134,6 @@ adrian-connor.img1         <span style="color:#ae81ff">63</span> <span style="co
             <h1><a href="https://aunfl0w.github.io/2021/zpool-reimport/">zpool reimport</a></h1>
             <time class="has-text-grey-light is-size-7">30 July 2021</time>
         
-            <h1><a href="https://aunfl0w.github.io/2019/html5routesapache/">HTML 5 routes &amp; deep links with Apache</a></h1>
-            <time class="has-text-grey-light is-size-7">14 April 2019</time>
-        
     </div>
 </div>
     <br>
@@ -127,7 +141,7 @@ adrian-connor.img1         <span style="color:#ae81ff">63</span> <span style="co
     <div class="card-content">
         <h1 class="title is-5">Archives</h1>
         
-            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (4)<br>
+            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (5)<br>
         
             <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
         
