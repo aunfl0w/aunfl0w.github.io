@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aun&#39;s Blog  | Mount a block device image</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
-    <link rel="stylesheet" href="https://aunfl0w.github.io/css/blog.css" />
+  <meta name="generator" content="Hugo 0.102.3" />
+  <link rel="canonical" href="https://aunfl0w.github.io/2021/mount-block-image/">
+
+  
+    
+    <meta name="description" content="How to mount a block device image Task: An image of a block divice has been created with dd for data recovery purposes. Mount the filesystem from the image and access files.
+Review image partition information Confirm that the image size matches the size of the source block device. If the size is incorrect review the block device options or try another program such as ddrescue to read a failing block device.">
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" type="text/css" href="/css/paper.css">
+
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/custom.css">
+  
+  
     
 <script type="application/javascript">
 var doNotTrack = false;
@@ -23,152 +42,87 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
+  
 
+  
+  
+  <title>Mount a block device image | Aun&#39;s Blog</title>
 </head>
-<body>
 
-    
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://aunfl0w.github.io">Home</a>
-        </div>
-    </nav>
-    
+  <body>
+    <div class="container paper">
+      <nav class="border split-nav">
+  <div class="nav-brand">
+    <h3><a href="/">Aun&#39;s Blog</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+    <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+      <main>
+        
 
-    
-    <section class="hero is-info is-medium">
-        <div class="hero-body" style="background-image: url(https://aunfl0w.github.io/img/bg-blog.jpg);">
-            <div class="container has-text-centered">
-                <br>
-                <h1 class="title is-size-1">
-                    
-                        Mount a block device image
-                    
-                </h1>
-                
-            </div>
-        </div>
-    </section>
+<h1 class="post-title">Mount a block device image</h1>
 
 
-<div class="container">
-    <div class="section">
-    
+<strong>Publish date: </strong>Oct 16, 2021
+<br>
 
-<div class="columns">
-    <div class="column is-9">
-        <div class="tile is-child box">
-            <div class="content">
-                <h1 id="how-to-mount-a-block-device-image">How to mount a block device image</h1>
+  <strong>Tags: </strong>
+  
+    <a href="/tags/linux">linux</a>
+  
+
+
+
+  
+
+
+
+<h1 id="how-to-mount-a-block-device-image">How to mount a block device image</h1>
 <p>Task: An image of a block divice has been created with <code>dd</code> for data recovery purposes.  Mount the filesystem from the image and access files.</p>
 <h2 id="review-image-partition-information">Review image partition information</h2>
 <p>Confirm that the image size matches the size of the source block device.  If the size is incorrect review the block device options or try another program such as <code>ddrescue</code> to read a failing block device.  In this case the image is the byte size reported by the block device and the partition information appears valid for the image.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ls -l adrian-connor.img
--rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">80000000000</span> Oct <span style="color:#ae81ff">10</span> 20:26 adrian-connor.img
-
-$ fdisk -lu adrian-connor.img
-Disk adrian-connor.img: 74.51 GiB, <span style="color:#ae81ff">80000000000</span> bytes, <span style="color:#ae81ff">156250000</span> sectors
-Units: sectors of <span style="color:#ae81ff">1</span> * 512 <span style="color:#f92672">=</span> <span style="color:#ae81ff">512</span> bytes
-Sector size <span style="color:#f92672">(</span>logical/physical<span style="color:#f92672">)</span>: <span style="color:#ae81ff">512</span> bytes / <span style="color:#ae81ff">512</span> bytes
-I/O size <span style="color:#f92672">(</span>minimum/optimal<span style="color:#f92672">)</span>: <span style="color:#ae81ff">512</span> bytes / <span style="color:#ae81ff">512</span> bytes
-Disklabel type: dos
-Disk identifier: 0xf52bcf0e
-
-Device             Boot Start       End   Sectors  Size Id Type
-adrian-connor.img1         <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">156232124</span> <span style="color:#ae81ff">156232062</span> 74.5G  <span style="color:#ae81ff">7</span> HPFS/NTFS/exFAT</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ls -l adrian-connor.img
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">80000000000</span> Oct <span style="color:#ae81ff">10</span> 20:26 adrian-connor.img
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ fdisk -lu adrian-connor.img
+</span></span><span style="display:flex;"><span>Disk adrian-connor.img: 74.51 GiB, <span style="color:#ae81ff">80000000000</span> bytes, <span style="color:#ae81ff">156250000</span> sectors
+</span></span><span style="display:flex;"><span>Units: sectors of <span style="color:#ae81ff">1</span> * 512 <span style="color:#f92672">=</span> <span style="color:#ae81ff">512</span> bytes
+</span></span><span style="display:flex;"><span>Sector size <span style="color:#f92672">(</span>logical/physical<span style="color:#f92672">)</span>: <span style="color:#ae81ff">512</span> bytes / <span style="color:#ae81ff">512</span> bytes
+</span></span><span style="display:flex;"><span>I/O size <span style="color:#f92672">(</span>minimum/optimal<span style="color:#f92672">)</span>: <span style="color:#ae81ff">512</span> bytes / <span style="color:#ae81ff">512</span> bytes
+</span></span><span style="display:flex;"><span>Disklabel type: dos
+</span></span><span style="display:flex;"><span>Disk identifier: 0xf52bcf0e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Device             Boot Start       End   Sectors  Size Id Type
+</span></span><span style="display:flex;"><span>adrian-connor.img1         <span style="color:#ae81ff">63</span> <span style="color:#ae81ff">156232124</span> <span style="color:#ae81ff">156232062</span> 74.5G  <span style="color:#ae81ff">7</span> HPFS/NTFS/exFAT</span></span></code></pre></div>
 <h1 id="mount-the-image">Mount the image</h1>
 <p><code>losetup</code> can be used to expose the block image as a device with partitions included.  However, it is also possible to skip this step and mount the partition using the partition offset.  In this case it starts at 63 sectors * 512 bytes offset into the device.  Since this is a block device image as opposed to a block loop that exposes partition information we will tell mount to offset into the image at the partiion start.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mount -o loop,ro,offset=$((512 * 63)) -t ntfs adrian-connor.img /mnt/d1</span>
-<span style="color:#75715e"># mount |grep d1</span>
-/media/aun/af376427-5802-4e1e-aafb-d0893ce855ae/adrian-connor.img on /mnt/d1 type fuseblk <span style="color:#f92672">(</span>ro,relatime,user_id<span style="color:#f92672">=</span>0,group_id<span style="color:#f92672">=</span>0,allow_other,blksize<span style="color:#f92672">=</span>4096<span style="color:#f92672">)</span>
-<span style="color:#75715e"># df /mnt/d1</span>
-Filesystem     1K-blocks     Used Available Use% Mounted on
-/dev/loop8      <span style="color:#ae81ff">78116028</span> <span style="color:#ae81ff">20436396</span>  <span style="color:#ae81ff">57679632</span>  27% /mnt/d1</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># mount -o loop,ro,offset=$((512 * 63)) -t ntfs adrian-connor.img /mnt/d1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mount |grep d1</span>
+</span></span><span style="display:flex;"><span>/media/aun/af376427-5802-4e1e-aafb-d0893ce855ae/adrian-connor.img on /mnt/d1 type fuseblk <span style="color:#f92672">(</span>ro,relatime,user_id<span style="color:#f92672">=</span>0,group_id<span style="color:#f92672">=</span>0,allow_other,blksize<span style="color:#f92672">=</span>4096<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># df /mnt/d1</span>
+</span></span><span style="display:flex;"><span>Filesystem     1K-blocks     Used Available Use% Mounted on
+</span></span><span style="display:flex;"><span>/dev/loop8      <span style="color:#ae81ff">78116028</span> <span style="color:#ae81ff">20436396</span>  <span style="color:#ae81ff">57679632</span>  27% /mnt/d1</span></span></code></pre></div>
 <h1 id="read-data-from-image-as-needed">Read data from image as needed</h1>
 <p>Now the disk is mounted under /mnt/d1 as read only.  Recover files as needed.  When finished <code>umount /mnt/d1</code> as root.</p>
 
-            </div>
-        </div>
-    </div>
-    <div class="column is-3">
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Tags</h1>
-        <div class="tags">
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/family">family</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/fpw">fpw</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/functional">functional</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/linux">linux</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/observability">observability</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/programming">programming</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/security">security</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/x">x</a></span>
-        
-        </div>          
-    </div>
-</div><br>
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Recent posts</h1>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/preload-fix/">Alter system calls with LD_PRELOAD</a></h1>
-            <time class="has-text-grey-light is-size-7">17 October 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">Mount a block device image</a></h1>
-            <time class="has-text-grey-light is-size-7">16 October 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/devops/">DevOps notes</a></h1>
-            <time class="has-text-grey-light is-size-7">6 September 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/lkm/">Linux kernel module basics</a></h1>
-            <time class="has-text-grey-light is-size-7">19 August 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/zpool-reimport/">zpool reimport</a></h1>
-            <time class="has-text-grey-light is-size-7">30 July 2021</time>
-        
-    </div>
-</div>
-    <br>
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Archives</h1>
-        
-            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (5)<br>
-        
-            <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
-        
-            <a href="https://aunfl0w.github.io/archives/2018">2018</a> (7)<br>
-        
-    </div>
-</div>
-
-    </div>
-</div>
 
 
-    </div>
-</div>
 
-<footer class="footer has-background-grey-darker has-text-white">
-    <div class="content has-text-centered">
-        <p>
-            <span class="icon is-large"><a href="https://twitter.com/aunwick" class="mysocial"><i class="fab fa-twitter fa-3x"></i></a></span>&nbsp;&nbsp;
-            <span class="icon is-large"><a href="https://github.com/aunfl0w" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
-            <br><br>
-            Copyright &copy; Aun&#39;s Blog 2021 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
-            - <a class="mysocial" href="https://aunfl0w.github.io/about">About</a>
-        </p>
-    </div>
-</footer>
-
-<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-</body>
+      </main>
+  </div>
+  </body>
 </html>

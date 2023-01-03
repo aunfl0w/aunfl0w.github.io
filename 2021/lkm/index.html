@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aun&#39;s Blog  | Linux kernel module basics</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
-    <link rel="stylesheet" href="https://aunfl0w.github.io/css/blog.css" />
+  <meta name="generator" content="Hugo 0.102.3" />
+  <link rel="canonical" href="https://aunfl0w.github.io/2021/lkm/">
+
+  
+    
+    <meta name="description" content="A basic example of a loadable kernel module, loading, debugging and build.">
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" type="text/css" href="/css/paper.css">
+
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/custom.css">
+  
+  
     
 <script type="application/javascript">
 var doNotTrack = false;
@@ -23,188 +41,182 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
+  
 
+  
+  
+  <title>Linux kernel module basics | Aun&#39;s Blog</title>
 </head>
-<body>
 
-    
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://aunfl0w.github.io">Home</a>
-        </div>
-    </nav>
-    
+  <body>
+    <div class="container paper">
+      <nav class="border split-nav">
+  <div class="nav-brand">
+    <h3><a href="/">Aun&#39;s Blog</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+    <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+      <main>
+        
 
-    
-    <section class="hero is-info is-medium">
-        <div class="hero-body" style="background-image: url(https://aunfl0w.github.io/img/bg-blog.jpg);">
-            <div class="container has-text-centered">
-                <br>
-                <h1 class="title is-size-1">
-                    
-                        Linux kernel module basics
-                    
-                </h1>
-                
-            </div>
-        </div>
-    </section>
+<h1 class="post-title">Linux kernel module basics</h1>
 
 
-<div class="container">
-    <div class="section">
-    
+<strong>Publish date: </strong>Aug 19, 2021
+<br>
 
-<div class="columns">
-    <div class="column is-9">
-        <div class="tile is-child box">
-            <div class="content">
-                <h1 id="linux-kernel-module-basics">Linux kernel module basics</h1>
+  <strong>Tags: </strong>
+  
+    <a href="/tags/linux">linux</a>
+  
+
+
+
+  
+
+<div class="child-borders">
+  <div class="toc border" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Table of contents</h2>
+    <ol>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#example-source-code">
+            Example source code
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#compile">
+            Compile
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#install-and-remove">
+            Install and remove
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#tracing">
+            Tracing
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#editing-source">
+            Editing source
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</div>
+
+
+
+<h1 id="linux-kernel-module-basics">Linux kernel module basics</h1>
 <p>A basic example of a loadable kernel module, loading, debugging and build.</p>
 <h2 id="example-source-code">Example source code</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;linux/module.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">skeleton_init_module</span>(<span style="color:#66d9ef">void</span>) {
-	printk(<span style="color:#e6db74">&#34;loaded skeleton&#34;</span>);
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-}
-
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">skeleton_cleanup_module</span>(<span style="color:#66d9ef">void</span>) {
-	printk(<span style="color:#e6db74">&#34;unloaded skeleton&#34;</span>);
-}
-
-module_init(init_module);
-module_exit(cleanup_module);
-
-MODULE_LICENSE(<span style="color:#e6db74">&#34;GPL&#34;</span>);</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;linux/module.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">skeleton_init_module</span>(<span style="color:#66d9ef">void</span>) {
+</span></span><span style="display:flex;"><span>	printk(<span style="color:#e6db74">&#34;loaded skeleton&#34;</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">skeleton_cleanup_module</span>(<span style="color:#66d9ef">void</span>) {
+</span></span><span style="display:flex;"><span>	printk(<span style="color:#e6db74">&#34;unloaded skeleton&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>module_init(init_module);
+</span></span><span style="display:flex;"><span>module_exit(cleanup_module);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MODULE_LICENSE(<span style="color:#e6db74">&#34;GPL&#34;</span>);</span></span></code></pre></div>
 <h2 id="compile">Compile</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sean@kilgore:~/src/linux/drivers/skeleton$ make -C /lib/modules/<span style="color:#e6db74">`</span>uname -r<span style="color:#e6db74">`</span>/build M<span style="color:#f92672">=</span>$PWD modules
-make: Entering directory <span style="color:#e6db74">&#39;/usr/src/linux-headers-5.11.0-27-generic&#39;</span>
-  CC <span style="color:#f92672">[</span>M<span style="color:#f92672">]</span>  /home/sean/src/linux/drivers/skeleton/skeleton.o
-  MODPOST /home/sean/src/linux/drivers/skeleton/Module.symvers
-  LD <span style="color:#f92672">[</span>M<span style="color:#f92672">]</span>  /home/sean/src/linux/drivers/skeleton/skeleton.ko
-make: Leaving directory <span style="color:#e6db74">&#39;/usr/src/linux-headers-5.11.0-27-generic&#39;</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sean@kilgore:~/src/linux/drivers/skeleton$ make -C /lib/modules/<span style="color:#e6db74">`</span>uname -r<span style="color:#e6db74">`</span>/build M<span style="color:#f92672">=</span>$PWD modules
+</span></span><span style="display:flex;"><span>make: Entering directory <span style="color:#e6db74">&#39;/usr/src/linux-headers-5.11.0-27-generic&#39;</span>
+</span></span><span style="display:flex;"><span>  CC <span style="color:#f92672">[</span>M<span style="color:#f92672">]</span>  /home/sean/src/linux/drivers/skeleton/skeleton.o
+</span></span><span style="display:flex;"><span>  MODPOST /home/sean/src/linux/drivers/skeleton/Module.symvers
+</span></span><span style="display:flex;"><span>  LD <span style="color:#f92672">[</span>M<span style="color:#f92672">]</span>  /home/sean/src/linux/drivers/skeleton/skeleton.ko
+</span></span><span style="display:flex;"><span>make: Leaving directory <span style="color:#e6db74">&#39;/usr/src/linux-headers-5.11.0-27-generic&#39;</span></span></span></code></pre></div>
 <h2 id="install-and-remove">Install and remove</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sean@kilgore:~/src/linux/drivers/skeleton$ sudo insmod skeleton.ko
-sean@kilgore:~/src/linux/drivers/skeleton$ sudo rmmod skeleton
-sean@kilgore:~/src/linux/drivers/skeleton$ dmesg |tail -2
-<span style="color:#f92672">[</span>56316.812072<span style="color:#f92672">]</span> loaded skeleton
-<span style="color:#f92672">[</span>56344.166820<span style="color:#f92672">]</span> unloaded skeleton</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sean@kilgore:~/src/linux/drivers/skeleton$ sudo insmod skeleton.ko
+</span></span><span style="display:flex;"><span>sean@kilgore:~/src/linux/drivers/skeleton$ sudo rmmod skeleton
+</span></span><span style="display:flex;"><span>sean@kilgore:~/src/linux/drivers/skeleton$ dmesg |tail -2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>56316.812072<span style="color:#f92672">]</span> loaded skeleton
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>56344.166820<span style="color:#f92672">]</span> unloaded skeleton</span></span></code></pre></div>
 <h2 id="tracing">Tracing</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kilgore:/sys/kernel/debug/tracing# echo <span style="color:#ae81ff">0</span> &gt; tracing_on
-root@kilgore:/sys/kernel/debug/tracing# echo function_graph &gt; current_tracer
-root@kilgore:/sys/kernel/debug/tracing# echo &gt; trace
-root@kilgore:/sys/kernel/debug/tracing# echo :mod:skeleton &gt; set_ftrace_filter
-root@kilgore:/sys/kernel/debug/tracing# echo <span style="color:#ae81ff">1</span> &gt; tracing_on
-root@kilgore:/sys/kernel/debug/tracing# insmod ~sean/src/linux/drivers/skeleton/skeleton.ko
-root@kilgore:/sys/kernel/debug/tracing# cat trace
-<span style="color:#75715e"># tracer: function_graph</span>
-<span style="color:#75715e">#</span>
-<span style="color:#75715e"># CPU  DURATION                  FUNCTION CALLS</span>
-<span style="color:#75715e"># |     |   |                     |   |   |   |</span>
- 0<span style="color:#f92672">)</span>   8.547 us    |  cleanup_module <span style="color:#f92672">[</span>skeleton<span style="color:#f92672">]()</span>;
-root@kilgore:/sys/kernel/debug/tracing# echo <span style="color:#ae81ff">0</span> &gt; tracing_on</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# echo <span style="color:#ae81ff">0</span> &gt; tracing_on
+</span></span><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# echo function_graph &gt; current_tracer
+</span></span><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# echo &gt; trace
+</span></span><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# echo :mod:skeleton &gt; set_ftrace_filter
+</span></span><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# echo <span style="color:#ae81ff">1</span> &gt; tracing_on
+</span></span><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# insmod ~sean/src/linux/drivers/skeleton/skeleton.ko
+</span></span><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# cat trace
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># tracer: function_graph</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CPU  DURATION                  FUNCTION CALLS</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># |     |   |                     |   |   |   |</span>
+</span></span><span style="display:flex;"><span> 0<span style="color:#f92672">)</span>   8.547 us    |  cleanup_module <span style="color:#f92672">[</span>skeleton<span style="color:#f92672">]()</span>;
+</span></span><span style="display:flex;"><span>root@kilgore:/sys/kernel/debug/tracing# echo <span style="color:#ae81ff">0</span> &gt; tracing_on</span></span></code></pre></div>
 <h2 id="editing-source">Editing source</h2>
 <p>With ubuntu source as example
 In addition to the below changes the module was added to the parent Makefile.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sean@kilgore:~/src/ubuntu-focal$ git checkout -b module-work
-Switched to a new branch <span style="color:#e6db74">&#39;module-work&#39;</span>
-
-sean@kilgore:~/src/ubuntu-focal$ git diff HEAD
-diff --git a/drivers/Makefile b/drivers/Makefile
-index 0d2354897ff6..c4a8ee84cd3b <span style="color:#ae81ff">100644</span>
---- a/drivers/Makefile
-+++ b/drivers/Makefile
-@@ -5,7 +5,7 @@
- <span style="color:#75715e"># 15 Sep 2000, Christoph Hellwig &lt;hch@infradead.org&gt;</span>
- <span style="color:#75715e"># Rewritten to use lists instead of if-statements.</span>
- <span style="color:#75715e">#</span>
--
-+obj-y                          +<span style="color:#f92672">=</span> skeleton/
- obj-y                          +<span style="color:#f92672">=</span> irqchip/
- obj-y                          +<span style="color:#f92672">=</span> bus/</code></pre></div>
-
-            </div>
-        </div>
-    </div>
-    <div class="column is-3">
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Tags</h1>
-        <div class="tags">
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/family">family</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/fpw">fpw</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/functional">functional</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/linux">linux</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/observability">observability</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/programming">programming</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/security">security</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/x">x</a></span>
-        
-        </div>          
-    </div>
-</div><br>
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Recent posts</h1>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/preload-fix/">Alter system calls with LD_PRELOAD</a></h1>
-            <time class="has-text-grey-light is-size-7">17 October 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">Mount a block device image</a></h1>
-            <time class="has-text-grey-light is-size-7">16 October 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/devops/">DevOps notes</a></h1>
-            <time class="has-text-grey-light is-size-7">6 September 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/lkm/">Linux kernel module basics</a></h1>
-            <time class="has-text-grey-light is-size-7">19 August 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/zpool-reimport/">zpool reimport</a></h1>
-            <time class="has-text-grey-light is-size-7">30 July 2021</time>
-        
-    </div>
-</div>
-    <br>
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Archives</h1>
-        
-            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (5)<br>
-        
-            <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
-        
-            <a href="https://aunfl0w.github.io/archives/2018">2018</a> (7)<br>
-        
-    </div>
-</div>
-
-    </div>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sean@kilgore:~/src/ubuntu-focal$ git checkout -b module-work
+</span></span><span style="display:flex;"><span>Switched to a new branch <span style="color:#e6db74">&#39;module-work&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sean@kilgore:~/src/ubuntu-focal$ git diff HEAD
+</span></span><span style="display:flex;"><span>diff --git a/drivers/Makefile b/drivers/Makefile
+</span></span><span style="display:flex;"><span>index 0d2354897ff6..c4a8ee84cd3b <span style="color:#ae81ff">100644</span>
+</span></span><span style="display:flex;"><span>--- a/drivers/Makefile
+</span></span><span style="display:flex;"><span>+++ b/drivers/Makefile
+</span></span><span style="display:flex;"><span>@@ -5,7 +5,7 @@
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># 15 Sep 2000, Christoph Hellwig &lt;hch@infradead.org&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># Rewritten to use lists instead of if-statements.</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>-
+</span></span><span style="display:flex;"><span>+obj-y                          +<span style="color:#f92672">=</span> skeleton/
+</span></span><span style="display:flex;"><span> obj-y                          +<span style="color:#f92672">=</span> irqchip/
+</span></span><span style="display:flex;"><span> obj-y                          +<span style="color:#f92672">=</span> bus/</span></span></code></pre></div>
 
 
-    </div>
-</div>
 
-<footer class="footer has-background-grey-darker has-text-white">
-    <div class="content has-text-centered">
-        <p>
-            <span class="icon is-large"><a href="https://twitter.com/aunwick" class="mysocial"><i class="fab fa-twitter fa-3x"></i></a></span>&nbsp;&nbsp;
-            <span class="icon is-large"><a href="https://github.com/aunfl0w" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
-            <br><br>
-            Copyright &copy; Aun&#39;s Blog 2021 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
-            - <a class="mysocial" href="https://aunfl0w.github.io/about">About</a>
-        </p>
-    </div>
-</footer>
 
-<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-</body>
+      </main>
+  </div>
+  </body>
 </html>

@@ -28,7 +28,7 @@ Review image partition information Confirm that the image size matches the size 
     </item>
     
     <item>
-      <title>DevOps notes</title>
+      <title>DevOps Topics</title>
       <link>https://aunfl0w.github.io/2021/devops/</link>
       <pubDate>Mon, 06 Sep 2021 19:00:12 -0400</pubDate>
       
@@ -90,7 +90,7 @@ A Non Functional Aproach This is a sample program that processes a generated sam
       
       <guid>https://aunfl0w.github.io/2018/freedomtoadd/</guid>
       <description>Growing Frozen Particle Waves I recently added docker support to Frozen Particle Waves. If you are looking for an OSS project where you can contribute to this is a great option. It isn&amp;rsquo;t finished so you have a great base to contribute updates and exhibit your skills.
-Some additions and updates that you can help with:  Add a storage system and services to add users and cameras. Separate the UI into a more up to date framework such as Angular.</description>
+Some additions and updates that you can help with: Add a storage system and services to add users and cameras. Separate the UI into a more up to date framework such as Angular.</description>
     </item>
     
     <item>

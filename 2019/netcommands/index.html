@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Aun&#39;s Blog  | Networking Observability</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
-    <link rel="stylesheet" href="https://aunfl0w.github.io/css/blog.css" />
+  <meta name="generator" content="Hugo 0.102.3" />
+  <link rel="canonical" href="https://aunfl0w.github.io/2019/netcommands/">
+
+  
+    
+    <meta name="description" content="Notes on networking observability commnads For many years and many UNIXen the netstat command has been the way to get information on the current state of TCP/IP and UNIX sockets. The recent man pages for netstat on linux state that netstat is “mostly obsolete” and use ss instead. The man page for ss, “another utility to investigate sockets”, says that is allows showing information similar to netstat. Some notes on using ss.">
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" type="text/css" href="/css/paper.css">
+
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/custom.css">
+  
+  
     
 <script type="application/javascript">
 var doNotTrack = false;
@@ -23,162 +41,141 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
+  
 
+  
+  
+  <title>Networking Observability | Aun&#39;s Blog</title>
 </head>
-<body>
 
-    
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://aunfl0w.github.io">Home</a>
-        </div>
-    </nav>
-    
+  <body>
+    <div class="container paper">
+      <nav class="border split-nav">
+  <div class="nav-brand">
+    <h3><a href="/">Aun&#39;s Blog</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+    <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+      <main>
+        
 
-    
-    <section class="hero is-info is-medium">
-        <div class="hero-body" style="background-image: url(https://aunfl0w.github.io/img/bg-blog.jpg);">
-            <div class="container has-text-centered">
-                <br>
-                <h1 class="title is-size-1">
-                    
-                        Networking Observability
-                    
-                </h1>
-                
-            </div>
-        </div>
-    </section>
+<h1 class="post-title">Networking Observability</h1>
 
 
-<div class="container">
-    <div class="section">
-    
+<strong>Publish date: </strong>Jan 5, 2019
+<br>
 
-<div class="columns">
-    <div class="column is-9">
-        <div class="tile is-child box">
-            <div class="content">
-                <h1 id="notes-on-networking-observability-commnads">Notes on networking observability commnads</h1>
+
+
+  
+
+<div class="child-borders">
+  <div class="toc border" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Table of contents</h2>
+    <ol>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#overview-statistics">
+            Overview Statistics
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#listening-sockets">
+            Listening Sockets
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#listening-tcp-sockets">
+            Listening TCP sockets
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#listening-udp-sockets">
+            Listening UDP sockets
+          </a>
+        </li>
+      
+    </ol>
+  </div>
+</div>
+
+
+
+<h1 id="notes-on-networking-observability-commnads">Notes on networking observability commnads</h1>
 <p>For many years and many UNIXen the netstat command has been the way to get information on the current state of TCP/IP and UNIX sockets.  The recent man pages for netstat on linux state that netstat is &ldquo;mostly obsolete&rdquo; and use ss instead.  The man page for ss, &ldquo;another utility to investigate sockets&rdquo;, says that is allows showing information similar to netstat.  Some notes on using ss.</p>
 <h2 id="overview-statistics">Overview Statistics</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ss -s
-
-Total: <span style="color:#ae81ff">549</span> <span style="color:#f92672">(</span>kernel 0<span style="color:#f92672">)</span>
-TCP:   <span style="color:#ae81ff">15</span> <span style="color:#f92672">(</span>estab 4, closed 0, orphaned 0, synrecv 0, timewait 0/0<span style="color:#f92672">)</span>, ports <span style="color:#ae81ff">0</span>
-
-Transport Total     IP        IPv6
-*	  <span style="color:#ae81ff">0</span>         -         -        
-RAW	  <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>        
-UDP	  <span style="color:#ae81ff">7</span>         <span style="color:#ae81ff">7</span>         <span style="color:#ae81ff">0</span>        
-TCP	  <span style="color:#ae81ff">15</span>        <span style="color:#ae81ff">8</span>         <span style="color:#ae81ff">7</span>        
-INET	  <span style="color:#ae81ff">22</span>        <span style="color:#ae81ff">15</span>        <span style="color:#ae81ff">7</span>        
-FRAG	  <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>        </code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ss -s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Total: <span style="color:#ae81ff">549</span> <span style="color:#f92672">(</span>kernel 0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>TCP:   <span style="color:#ae81ff">15</span> <span style="color:#f92672">(</span>estab 4, closed 0, orphaned 0, synrecv 0, timewait 0/0<span style="color:#f92672">)</span>, ports <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Transport Total     IP        IPv6
+</span></span><span style="display:flex;"><span>*	  <span style="color:#ae81ff">0</span>         -         -        
+</span></span><span style="display:flex;"><span>RAW	  <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>        
+</span></span><span style="display:flex;"><span>UDP	  <span style="color:#ae81ff">7</span>         <span style="color:#ae81ff">7</span>         <span style="color:#ae81ff">0</span>        
+</span></span><span style="display:flex;"><span>TCP	  <span style="color:#ae81ff">15</span>        <span style="color:#ae81ff">8</span>         <span style="color:#ae81ff">7</span>        
+</span></span><span style="display:flex;"><span>INET	  <span style="color:#ae81ff">22</span>        <span style="color:#ae81ff">15</span>        <span style="color:#ae81ff">7</span>        
+</span></span><span style="display:flex;"><span>FRAG	  <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>         <span style="color:#ae81ff">0</span>        </span></span></code></pre></div>
 <h2 id="listening-sockets">Listening Sockets</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ss -l
-Too much output</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ss -l
+</span></span><span style="display:flex;"><span>Too much output</span></span></code></pre></div>
 <h2 id="listening-tcp-sockets">Listening TCP sockets</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ss -l -t
-State       Recv-Q       Send-Q                Local Address:Port                 Peer Address:Port       
-LISTEN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">128</span>                   127.0.0.53%lo:domain                    0.0.0.0:*          
-LISTEN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">5</span>                         127.0.0.1:ipp                       0.0.0.0:*          
-LISTEN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">5</span>                             <span style="color:#f92672">[</span>::1<span style="color:#f92672">]</span>:ipp                          <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*     </code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ss -l -t
+</span></span><span style="display:flex;"><span>State       Recv-Q       Send-Q                Local Address:Port                 Peer Address:Port       
+</span></span><span style="display:flex;"><span>LISTEN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">128</span>                   127.0.0.53%lo:domain                    0.0.0.0:*          
+</span></span><span style="display:flex;"><span>LISTEN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">5</span>                         127.0.0.1:ipp                       0.0.0.0:*          
+</span></span><span style="display:flex;"><span>LISTEN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">5</span>                             <span style="color:#f92672">[</span>::1<span style="color:#f92672">]</span>:ipp                          <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*     </span></span></code></pre></div>
 <h2 id="listening-udp-sockets">Listening UDP sockets</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ss -l -u
-State       Recv-Q       Send-Q                Local Address:Port                 Peer Address:Port       
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                     127.0.0.53%lo:domain                    0.0.0.0:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:bootpc                    0.0.0.0:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:ipp                       0.0.0.0:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:33501                     0.0.0.0:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:mdns                      0.0.0.0:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:mdns                      0.0.0.0:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:mdns                      0.0.0.0:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                              <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:55092                        <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                                 *:mdns                            *:*          
-UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                              <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:mdns                         <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*          </code></pre></div>
-
-            </div>
-        </div>
-    </div>
-    <div class="column is-3">
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Tags</h1>
-        <div class="tags">
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/family">family</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/fpw">fpw</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/functional">functional</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/linux">linux</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/observability">observability</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/programming">programming</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/security">security</a></span>
-        
-            <span class="tag"><a href="https://aunfl0w.github.io/tags/x">x</a></span>
-        
-        </div>          
-    </div>
-</div><br>
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Recent posts</h1>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/preload-fix/">Alter system calls with LD_PRELOAD</a></h1>
-            <time class="has-text-grey-light is-size-7">17 October 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/mount-block-image/">Mount a block device image</a></h1>
-            <time class="has-text-grey-light is-size-7">16 October 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/devops/">DevOps notes</a></h1>
-            <time class="has-text-grey-light is-size-7">6 September 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/lkm/">Linux kernel module basics</a></h1>
-            <time class="has-text-grey-light is-size-7">19 August 2021</time>
-        
-            <h1><a href="https://aunfl0w.github.io/2021/zpool-reimport/">zpool reimport</a></h1>
-            <time class="has-text-grey-light is-size-7">30 July 2021</time>
-        
-    </div>
-</div>
-    <br>
-        <div class="card">
-    <div class="card-content">
-        <h1 class="title is-5">Archives</h1>
-        
-            <a href="https://aunfl0w.github.io/archives/2021">2021</a> (5)<br>
-        
-            <a href="https://aunfl0w.github.io/archives/2019">2019</a> (2)<br>
-        
-            <a href="https://aunfl0w.github.io/archives/2018">2018</a> (7)<br>
-        
-    </div>
-</div>
-
-    </div>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ss -l -u
+</span></span><span style="display:flex;"><span>State       Recv-Q       Send-Q                Local Address:Port                 Peer Address:Port       
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                     127.0.0.53%lo:domain                    0.0.0.0:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:bootpc                    0.0.0.0:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:ipp                       0.0.0.0:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:33501                     0.0.0.0:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:mdns                      0.0.0.0:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:mdns                      0.0.0.0:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                           0.0.0.0:mdns                      0.0.0.0:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                              <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:55092                        <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                                 *:mdns                            *:*          
+</span></span><span style="display:flex;"><span>UNCONN      <span style="color:#ae81ff">0</span>            <span style="color:#ae81ff">0</span>                              <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:mdns                         <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:*          </span></span></code></pre></div>
 
 
-    </div>
-</div>
 
-<footer class="footer has-background-grey-darker has-text-white">
-    <div class="content has-text-centered">
-        <p>
-            <span class="icon is-large"><a href="https://twitter.com/aunwick" class="mysocial"><i class="fab fa-twitter fa-3x"></i></a></span>&nbsp;&nbsp;
-            <span class="icon is-large"><a href="https://github.com/aunfl0w" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
-            <br><br>
-            Copyright &copy; Aun&#39;s Blog 2021 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
-            - <a class="mysocial" href="https://aunfl0w.github.io/about">About</a>
-        </p>
-    </div>
-</footer>
 
-<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-</body>
+      </main>
+  </div>
+  </body>
 </html>
